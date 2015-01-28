@@ -32,7 +32,11 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    private Texture fondEcran;
 	    private Image fond;
 	    private int nbpoint =0;
-	    
+	  //Ceci est un test
+	  //Ceci est un test
+	  //Ceci est un test
+	  //Ceci est un test
+	  //Ceci est un test
 		
 	    
 	    private Joueur joueur1;
