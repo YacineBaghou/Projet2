@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
+import fr.ProjetGame2.Elements.Block;
 import fr.ProjetGame2.Elements.Joueur;
 import fr.ProjetGame2.Elements.Plateau;
 import fr.ProjetGame2.Elements.World;
@@ -36,7 +37,10 @@ import fr.ProjetGame2.View.WorldRenderer;
 	  //Ceci est un test
 	  //Ceci est un test
 	  //Ceci est un test
-	  //Ceci est un test
+	    
+	    
+	    
+	  //Ceci est un putain de test
 		
 	    
 	    private Joueur joueur1;
@@ -55,21 +59,17 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    @Override
 	    public void show() {
 
-
+	    	//Ajout de nouveau joueur et instanciation du plateau
 			joueur1 = new Joueur("Alex");
 			joueur2 = new Joueur("Paulo");
-			
 			Plateau monPlateau = new Plateau(joueur1, joueur2, 10, 10);
-			
 			System.out.println("Creation d'une partie");
-	    	
-	    	
 	    	
 	        world = new World();
 	        renderer = new WorldRenderer(world, false, monPlateau);
 	        Gdx.input.setInputProcessor(this);
 	        stage = new Stage();
-	    	Gdx.input.setInputProcessor(stage);;
+	    	Gdx.input.setInputProcessor(stage);
 	    	skin = new Skin(Gdx.files.internal("uiskin/uiskin.json"));
 	    	
 	    	//Ajout Du fond d'écran
@@ -104,31 +104,26 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    	if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)||Gdx.input.isButtonPressed(Input.Buttons.LEFT))
 	    		Gdx.input.setInputProcessor(this);
 			
-	    	if(boutonRetour.isPressed()){
-	    		game.setScreen(new MenuScreen(game));
-	    		
-	    	}
-	 
-	    		
-	    	Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
-	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	    	//incrementation du label score(test)
 	        nbpoint++;
 	        point.setText(String.valueOf(nbpoint));
 	        
+	        
 	        stage.act();
 	        stage.draw();
-	        
 	        renderer.render();
 	    	
-		 if (boutonRetour.isPressed())
-			 game.setScreen(new MenuScreen(game));
+	        //Action du bouton retour au menu
+	        if (boutonRetour.isPressed())
+	        	game.setScreen(new MenuScreen(game));
 	     
 	        
 	    }
 	 
 	    @Override
 	    public void resize(int width, int height) {
-	        renderer.setSize(width*3/5, height*3/5); //modif
+	    	//definition de la taille de la grille
+	        renderer.setSize(width*3/5, height*3/5); 
 	    }
 	 
 	    @Override
@@ -174,13 +169,14 @@ import fr.ProjetGame2.View.WorldRenderer;
 	 
 	    @Override
 	    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-	    	
+	    	//action sur les clicks
 	    	if (button == Buttons.LEFT){
 	    		System.out.println("x"+ screenX +"y"+screenY);
 	    	}
 	    	if (button == Buttons.RIGHT){
 	    		System.out.println("x"+ screenX +"y"+screenY);	
 	    	}
+	    	
 	    	return false;
 	    	
 	    }

@@ -24,6 +24,7 @@ public class ScoreScreen implements Screen, InputProcessor{
 	private TextButton boutonRetour;
     private Texture fondEcran;
     private Image fond;
+    
     public ScoreScreen(ProjetGame2 game) {
         this.game = game;
     }
@@ -82,6 +83,8 @@ public class ScoreScreen implements Screen, InputProcessor{
         stage = new Stage();
     	Gdx.input.setInputProcessor(stage);
     	skin = new Skin(Gdx.files.internal("uiskin/uiskin.json"));
+    	
+    	//fond d'écran
     	fondEcran = new Texture(Gdx.files.internal("images/fond2.jpg"));
     	fond = new Image(fondEcran);
 		stage.addActor(fond);
@@ -111,7 +114,9 @@ public class ScoreScreen implements Screen, InputProcessor{
 	@Override
 	public void render(float delta) {
 		stage.act();
-        stage.draw(); 
+        stage.draw();
+        
+        //action du bouton retour menu
         if (boutonRetour.isPressed())
 	       	game.setScreen(new MenuScreen(game));
 		

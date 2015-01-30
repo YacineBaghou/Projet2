@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.Array;
  
 public class World {
  
-    /** Les blocs qui composent le monde **/
+   	//Liste de blocks qui composent la grille
     Array<Block> blocks = new Array<Block>();
  
     // Getters -----------
@@ -20,7 +20,7 @@ public class World {
     }
  
     private void createDemoWorld() {
- 
+    	//Création de la grille
         for (int col = 0; col < 10; col++) {
         	for (int lig = 0; lig < 10; lig++) {
         	blocks.add(new Block(new Vector2(col, lig)));              

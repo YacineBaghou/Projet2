@@ -34,8 +34,11 @@ public class MenuScreen implements Screen, InputProcessor {
 	
     @Override
     public void render(float delta) {
+    	//Action sur le bouton jouer
         if (boutonJouer.isPressed())
         	game.setScreen(new GameScreen(game));
+        
+        //Action sur le bouton Score
         if (boutonScore.isPressed())
         	game.setScreen(new ScoreScreen(game));
         stage.act();
@@ -54,10 +57,10 @@ public class MenuScreen implements Screen, InputProcessor {
 	public void show() {
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
-		fondEcran = new Texture(Gdx.files.internal("images/jewel.jpg"));
 		skin = new Skin(Gdx.files.internal("uiskin/uiskin.json"));
 		
 		//image de fond d'écran
+		fondEcran = new Texture(Gdx.files.internal("images/jewel.jpg"));
 		fond = new Image(fondEcran);
 		stage.addActor(fond);
 		

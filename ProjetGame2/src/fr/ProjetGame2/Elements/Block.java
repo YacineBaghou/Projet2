@@ -10,7 +10,7 @@ public class Block {
     Vector2     position = new Vector2();
     Rectangle   bounds = new Rectangle();
  
-    public Block(Vector2 pos) {
+    public Block(Vector2 pos) { //Vector2 class Java ayant pour paramétres x et y
         this.position = pos;
         this.bounds.width = SIZE;
         this.bounds.height = SIZE;
