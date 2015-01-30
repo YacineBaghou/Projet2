@@ -4,9 +4,12 @@ package fr.ProjetGame2.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -26,7 +29,9 @@ public class MenuScreen implements Screen, InputProcessor {
 	private TextButton boutonJouer;
 	private TextButton boutonScore;
 	private ProjetGame2 game;
-
+	//private Button b;
+	public BitmapFont font;
+	
     public MenuScreen(ProjetGame2 game) {
         this.game = game;
     }
@@ -55,10 +60,12 @@ public class MenuScreen implements Screen, InputProcessor {
 
 	@Override
 	public void show() {
+		 
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
 		skin = new Skin(Gdx.files.internal("uiskin/uiskin.json"));
-		
+		//b = new Button();
+		//b.setPosition(Gdx.app.getGraphics().getWidth()/2-titre.getWidth()/2, Gdx.app.getGraphics().getHeight()-50);
 		//image de fond d'écran
 		fondEcran = new Texture(Gdx.files.internal("images/jewel.jpg"));
 		fond = new Image(fondEcran);
@@ -67,20 +74,27 @@ public class MenuScreen implements Screen, InputProcessor {
 		//Bouton qui lance l'écran de jeu
 		titre = new Label("Menu principale du jeu",skin);
 		titre.setPosition(Gdx.app.getGraphics().getWidth()/2-titre.getWidth()/2, Gdx.app.getGraphics().getHeight()-50);
-		stage.addActor(titre);
+		titre.setColor(Color.WHITE);
+		//stage.addActor(titre);
 		//3eme widget
 		boutonJouer = new TextButton("Jouer",skin);
 		boutonJouer.setPosition(Gdx.app.getGraphics().getWidth()/2-boutonJouer.getWidth()/2, Gdx.app.getGraphics().getHeight()-100);
+		boutonJouer.setColor(Color.CYAN);
+		
 		stage.addActor(boutonJouer);
 		
 		//Bouton qui lance l'écran des scores
 		boutonScore = new TextButton("Scores",skin);
 		boutonScore.setPosition(Gdx.app.getGraphics().getWidth()/2-boutonScore.getWidth()/2, Gdx.app.getGraphics().getHeight()-150);
+		boutonScore.setColor(Color.CYAN);
 		stage.addActor(boutonScore);
 		
 		//bouton qui quitte le jeu
 		boutonQuitter = new TextButton("Quitter",skin);
 		boutonQuitter.setPosition(Gdx.app.getGraphics().getWidth()/2-boutonQuitter.getWidth()/2, Gdx.app.getGraphics().getHeight()-200);
+		boutonQuitter.setColor(Color.CYAN);
+		//Personnalisation du bouton
+		boutonQuitter.getLabel().setColor(Color.RED);
 		boutonQuitter.addListener(new ClickListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int bouton){
 				Gdx.app.exit();

@@ -4,6 +4,7 @@ package fr.ProjetGame2.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -105,6 +106,7 @@ public class ScoreScreen implements Screen, InputProcessor{
 		//bouton retour au menu
 		boutonRetour = new TextButton("Menu",skin);
 		boutonRetour.setPosition(100, 20);
+		boutonRetour.setColor(Color.CYAN);
 		stage.addActor(boutonRetour);
 		
 		

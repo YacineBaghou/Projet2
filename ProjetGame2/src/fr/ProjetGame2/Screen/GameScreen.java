@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -33,6 +34,7 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    private Texture fondEcran;
 	    private Image fond;
 	    private int nbpoint =0;
+	 
 	  //Ceci est un test
 	  //Ceci est un test
 	  //Ceci est un test
@@ -53,6 +55,7 @@ import fr.ProjetGame2.View.WorldRenderer;
 	 
 	    public GameScreen(ProjetGame2 game) {
 	        this.game = game;
+	        
 	    }
 	    
 	    
@@ -93,6 +96,7 @@ import fr.ProjetGame2.View.WorldRenderer;
 			//Ajout du bouton pour quitter l'écran
 			boutonRetour = new TextButton("Menu",skin);
 			boutonRetour.setPosition(100, 20);
+			boutonRetour.setColor(Color.CYAN);
 			stage.addActor(boutonRetour);
 			 
 
@@ -133,7 +137,7 @@ import fr.ProjetGame2.View.WorldRenderer;
 	 
 	    @Override
 	    public void pause() {
-	        // TODO Auto-generated method stub
+	        
 	    }
 	 
 	    @Override
