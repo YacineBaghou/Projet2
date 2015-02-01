@@ -7,12 +7,14 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
+import fr.ProjetGame2.Elements.Block;
 import fr.ProjetGame2.Elements.Joueur;
 import fr.ProjetGame2.Elements.Plateau;
 import fr.ProjetGame2.Elements.World;
@@ -101,12 +103,12 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    @Override
 	    public void render(float delta) {
 	    	
-	    	if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)||Gdx.input.isButtonPressed(Input.Buttons.LEFT))
-	    		Gdx.input.setInputProcessor(this);
-			
-	    	if(boutonRetour.isPressed()){
+	    	/*/A voir?
+	    	if(boutonRetour.isPressed())
 	    		game.setScreen(new MenuScreen(game));
-	    		
+	    		*/
+	    	if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)||Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+	    		Gdx.input.setInputProcessor(this);
 	    	}
 	 
 	    		
@@ -176,7 +178,9 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 	    	
 	    	if (button == Buttons.LEFT){
-	    		System.out.println("x"+ screenX +"y"+screenY);
+	    		//System.out.println("x"+ screenX +"y"+screenY);
+	    		Block unBlock = trouverClick(screenX, screenY);
+	    		System.out.println(unBlock.getPosition().x + "" + unBlock.getPosition().y );
 	    	}
 	    	if (button == Buttons.RIGHT){
 	    		System.out.println("x"+ screenX +"y"+screenY);	
@@ -207,4 +211,47 @@ import fr.ProjetGame2.View.WorldRenderer;
 	        // TODO Auto-generated method stub
 	        return false;
 	    }
+	    
+	    
+	    private Block trouverClick(int x, int y){
+	    	int Xref = 0,Yref = 0,coordX, coordY;   	
+	    	
+	    	for(Block block: world.getBlocks()){
+	    		if(block.getPosition().x == 0 && block.getPosition().y == 9){
+	    			Xref = Math.round(block.getPosition().x);
+	    			Yref = Math.round(block.getPosition().y);
+	    		}
+	    	}
+	    	
+	    	//System.out.println(world.getBlocks().get(0).getPosition().x + ""+ world.getBlocks().get(0).getPosition().y);
+	    	coordX = (x - Xref) /20;
+	    	coordY = (y - Yref) /20;
+	    	
+	    	Block retour = new Block(new Vector2(coordX,coordY));
+	    	
+	    	return retour;
+	    }
+	    
+	    
+	    
+	    private Block getBlock(int x, int y){
+	    	for(Block block:world.getBlocks()){
+	    		if(block.getPosition().x == x && block.getPosition().y == y){
+	    			return block;
+	    		}
+	    	}
+	    	
+	    	return null;
+	    }
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 	}
