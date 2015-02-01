@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
@@ -34,11 +35,15 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    private Texture fondEcran;
 	    private Image fond;
 	    private int nbpoint =0;
+	 
 	  //Ceci est un test
 	  //Ceci est un test
 	  //Ceci est un test
 	  //Ceci est un test
-	  //Ceci est un test
+	    
+	    
+	    
+	  //Ceci est un putain de test
 		
 	    
 	    private Joueur joueur1;
@@ -51,27 +56,24 @@ import fr.ProjetGame2.View.WorldRenderer;
 	 
 	    public GameScreen(ProjetGame2 game) {
 	        this.game = game;
+	        
 	    }
 	    
 	    
 	    @Override
 	    public void show() {
 
-
+	    	//Ajout de nouveau joueur et instanciation du plateau
 			joueur1 = new Joueur("Alex");
 			joueur2 = new Joueur("Paulo");
-			
 			Plateau monPlateau = new Plateau(joueur1, joueur2, 10, 10);
-			
 			System.out.println("Creation d'une partie");
-	    	
-	    	
 	    	
 	        world = new World();
 	        renderer = new WorldRenderer(world, false, monPlateau);
 	        Gdx.input.setInputProcessor(this);
 	        stage = new Stage();
-	    	Gdx.input.setInputProcessor(stage);;
+	    	Gdx.input.setInputProcessor(stage);
 	    	skin = new Skin(Gdx.files.internal("uiskin/uiskin.json"));
 	    	
 	    	//Ajout Du fond d'écran
@@ -95,6 +97,7 @@ import fr.ProjetGame2.View.WorldRenderer;
 			//Ajout du bouton pour quitter l'écran
 			boutonRetour = new TextButton("Menu",skin);
 			boutonRetour.setPosition(100, 20);
+			boutonRetour.setColor(Color.CYAN);
 			stage.addActor(boutonRetour);
 			 
 
@@ -103,34 +106,43 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    @Override
 	    public void render(float delta) {
 	    	
+
 	    	/*/A voir?
 	    	if(boutonRetour.isPressed())
 	    		game.setScreen(new MenuScreen(game));
-	    		*/
+	    		
 	    	if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)||Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
 	    		Gdx.input.setInputProcessor(this);
 	    	}
 	 
 	    		
 	    	Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
-	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/
+
+	    	if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)||Gdx.input.isButtonPressed(Input.Buttons.LEFT))
+	    		Gdx.input.setInputProcessor(this);
+			
+	    	//incrementation du label score(test)
+
 	        nbpoint++;
 	        point.setText(String.valueOf(nbpoint));
 	        
+	        
 	        stage.act();
 	        stage.draw();
-	        
 	        renderer.render();
 	    	
-		 if (boutonRetour.isPressed())
-			 game.setScreen(new MenuScreen(game));
+	        //Action du bouton retour au menu
+	        if (boutonRetour.isPressed())
+	        	game.setScreen(new MenuScreen(game));
 	     
 	        
 	    }
 	 
 	    @Override
 	    public void resize(int width, int height) {
-	        renderer.setSize(width*3/5, height*3/5); //modif
+	    	//definition de la taille de la grille
+	        renderer.setSize(width*3/5, height*3/5); 
 	    }
 	 
 	    @Override
@@ -140,7 +152,7 @@ import fr.ProjetGame2.View.WorldRenderer;
 	 
 	    @Override
 	    public void pause() {
-	        // TODO Auto-generated method stub
+	        
 	    }
 	 
 	    @Override
@@ -176,7 +188,7 @@ import fr.ProjetGame2.View.WorldRenderer;
 	 
 	    @Override
 	    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-	    	
+	    	//action sur les clicks
 	    	if (button == Buttons.LEFT){
 	    		//System.out.println("x"+ screenX +"y"+screenY);
 	    		Block unBlock = trouverClick(screenX, screenY);
@@ -185,6 +197,7 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    	if (button == Buttons.RIGHT){
 	    		System.out.println("x"+ screenX +"y"+screenY);	
 	    	}
+	    	
 	    	return false;
 	    	
 	    }

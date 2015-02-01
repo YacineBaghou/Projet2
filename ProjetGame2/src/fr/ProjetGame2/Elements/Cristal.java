@@ -17,4 +17,5 @@ public class Cristal {
 		return Integer.toString(this.couleur);
 	}
 	
+	
 }
