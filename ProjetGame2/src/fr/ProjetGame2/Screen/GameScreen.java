@@ -43,6 +43,8 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    Plateau monPlateau;
 	    private ProjetGame2 game;
 	    
+	    private Block blockDejaJoue;
+	    
 	    
 	    
 	 
@@ -185,6 +187,11 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    		//System.out.println("x"+ screenX +"y"+screenY);
 	    		Block unBlock = trouverClick(screenX, screenY);
 	    		System.out.println(unBlock.getPosition().x + "" + unBlock.getPosition().y );
+	    		if(unBlock.getPosition().x<10 && unBlock.getPosition().x > 0 && unBlock.getPosition().y<10 && unBlock.getPosition().y > 0 && blockDejaJoue != null){
+	    			monPlateau.jouer(joueur2, (int)unBlock.getPosition().x, (int)unBlock.getPosition().y, (int)blockDejaJoue.getPosition().x, (int)blockDejaJoue.getPosition().y);
+	    			blockDejaJoue = null;
+	    		}else
+	    			blockDejaJoue = unBlock;
 	    	}
 	    	if (button == Buttons.RIGHT){
 	    		System.out.println("x"+ screenX +"y"+screenY);	
@@ -219,18 +226,11 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    
 	    
 	    private Block trouverClick(int x, int y){
-	    	int Xref = 0,Yref = 0,coordX, coordY;   	
+	    	int coordX, coordY;   	
 	    	
-	    	for(Block block: world.getBlocks()){
-	    		if(block.getPosition().x == 0 && block.getPosition().y == 9){
-	    			Xref = Math.round(block.getPosition().x);
-	    			Yref = Math.round(block.getPosition().y);
-	    		}
-	    	}
 	    	
-	    	//System.out.println(world.getBlocks().get(0).getPosition().x + ""+ world.getBlocks().get(0).getPosition().y);
-	    	coordX = (x - Xref) /20;
-	    	coordY = (y - Yref) /20;
+	    	coordX = (int)((x-200)/36);
+	    	coordY = (int)(((int)stage.getHeight() - y - 40)/34.285);
 	    	
 	    	Block retour = new Block(new Vector2(coordX,coordY));
 	    	
