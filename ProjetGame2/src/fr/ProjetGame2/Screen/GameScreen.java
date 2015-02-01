@@ -36,15 +36,7 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    private Image fond;
 	    private int nbpoint =0;
 	 
-	  //Ceci est un test
-	  //Ceci est un test
-	  //Ceci est un test
-	  //Ceci est un test
-	    
-	    
-	    
-	  //Ceci est un putain de test
-		
+	
 	    
 	    private Joueur joueur1;
 	    private Joueur joueur2;
