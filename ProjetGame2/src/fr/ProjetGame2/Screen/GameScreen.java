@@ -41,7 +41,7 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    Plateau monPlateau;
 	    private ProjetGame2 game;
 	    
-	    private Block blockDejaJoue;
+	    private Block blockDejaJoue = null;
 	    
 	    
 	    
@@ -58,7 +58,7 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    	//Ajout de nouveau joueur et instanciation du plateau
 			joueur1 = new Joueur("Alex");
 			joueur2 = new Joueur("Paulo");
-			Plateau monPlateau = new Plateau(joueur1, joueur2, 10, 10);
+			monPlateau = new Plateau(joueur1, joueur2, 10, 10);
 			System.out.println("Creation d'une partie");
 	    	
 	        world = new World();
@@ -186,12 +186,18 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    		
 	    		//System.out.println("x"+ screenX +"y"+screenY);
 	    		Block unBlock = trouverClick(screenX, screenY);
-	    		System.out.println(unBlock.getPosition().x + "" + unBlock.getPosition().y );
-	    		if(unBlock.getPosition().x<10 && unBlock.getPosition().x > 0 && unBlock.getPosition().y<10 && unBlock.getPosition().y > 0 && blockDejaJoue != null){
-	    			monPlateau.jouer(joueur2, (int)unBlock.getPosition().x, (int)unBlock.getPosition().y, (int)blockDejaJoue.getPosition().x, (int)blockDejaJoue.getPosition().y);
+	    		//System.out.println(unBlock.getPosition().x + "" + unBlock.getPosition().y );
+	    		
+	    		if(unBlock.getPosition().x<10 && unBlock.getPosition().x >= 0 && unBlock.getPosition().y<10 && unBlock.getPosition().y >= 0 && blockDejaJoue != null){
+	    			monPlateau.jouer(joueur1, 9-(int)unBlock.getPosition().y, (int)unBlock.getPosition().x, 9 - (int)blockDejaJoue.getPosition().y, (int)blockDejaJoue.getPosition().x);
+	    			
+	    			System.out.println("Clické  X:"+ unBlock.getPosition().x +"  Y:"+unBlock.getPosition().y );
 	    			blockDejaJoue = null;
-	    		}else
+	    		}else{
 	    			blockDejaJoue = unBlock;
+	    			System.out.println("Clické  X:"+ blockDejaJoue.getPosition().x +"  Y:"+blockDejaJoue.getPosition().y );
+	    		}
+    			
 	    	}
 	    	if (button == Buttons.RIGHT){
 	    		System.out.println("x"+ screenX +"y"+screenY);	
