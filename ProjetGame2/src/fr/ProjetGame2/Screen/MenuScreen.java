@@ -6,10 +6,8 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -29,8 +27,6 @@ public class MenuScreen implements Screen, InputProcessor {
 	private TextButton boutonJouer;
 	private TextButton boutonScore;
 	private ProjetGame2 game;
-	//private Button b;
-	public BitmapFont font;
 	
     public MenuScreen(ProjetGame2 game) {
         this.game = game;

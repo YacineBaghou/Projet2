@@ -1,12 +1,10 @@
 package fr.ProjetGame2.Screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -101,34 +99,28 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    public void render(float delta) {
 	    	
 
-	    	/*/A voir?
-	    	if(boutonRetour.isPressed())
-	    		game.setScreen(new MenuScreen(game));
-	    		
-	    	if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)||Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-	    		Gdx.input.setInputProcessor(this);
-	    	}
+	    	
+//	    	if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)||Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+	    	Gdx.input.setInputProcessor(this);
+//	    	}
 	 
-	    		
-	    	Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
-	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/
-
-	    	if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)||Gdx.input.isButtonPressed(Input.Buttons.LEFT))
-	    		Gdx.input.setInputProcessor(this);
-			
 	    	//incrementation du label score(test)
 
 	        nbpoint++;
 	        point.setText(String.valueOf(nbpoint));
-	        
+	        //Action du bouton retour au menu
+	       
 	        
 	        stage.act();
 	        stage.draw();
 	        renderer.render();
 	    	
-	        //Action du bouton retour au menu
-	        if (boutonRetour.isPressed())
-	        	game.setScreen(new MenuScreen(game));
+	        /*if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+		    	if(RetourMenu(Gdx.input.getX(), Gdx.input.getY()) == true){
+		    		game.setScreen(new MenuScreen(game));
+		    		System.out.println("branlette"+ boutonRetour.getX() + boutonRetour.getY());
+		    	}
+	        }*/
 	     
 	        
 	    }
@@ -184,6 +176,14 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 	    	//action sur les clicks
 	    	if (button == Buttons.LEFT){
+	    		
+	    		if((screenX>=boutonRetour.getX() && screenX<=boutonRetour.getX()+boutonRetour.getWidth()) && 
+		    			(screenY>= stage.getHeight() - boutonRetour.getY()-35 && screenY<= stage.getHeight() - boutonRetour.getY()-35+boutonRetour.getHeight())){
+	    				game.setScreen(new MenuScreen(game));
+	    				System.out.println("branlette"+ boutonRetour.getX() + boutonRetour.getY());
+	    				return false;
+	    		}
+	    		
 	    		//System.out.println("x"+ screenX +"y"+screenY);
 	    		Block unBlock = trouverClick(screenX, screenY);
 	    		System.out.println(unBlock.getPosition().x + "" + unBlock.getPosition().y );
@@ -197,6 +197,7 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    		System.out.println("x"+ screenX +"y"+screenY);	
 	    	}
 	    	
+	    	RetourMenu(screenX,screenY);
 	    	return false;
 	    	
 	    }
@@ -205,7 +206,13 @@ import fr.ProjetGame2.View.WorldRenderer;
 	        
 	        return false;
 	    }
-	 
+	    public boolean RetourMenu(int screenX, int screenY){
+	    	if((screenX>=boutonRetour.getX() && screenX<=boutonRetour.getX()+boutonRetour.getWidth()) && 
+	    			(screenY>= stage.getHeight() - boutonRetour.getY()-35 && screenY<= stage.getHeight() - boutonRetour.getY()-35+boutonRetour.getHeight())){
+	    		return true;
+	    	}
+	    	return false;
+	    }
 	    @Override
 	    public boolean touchDragged(int x, int y, int pointer) {
 	        // TODO Auto-generated method stub
