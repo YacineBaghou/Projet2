@@ -1,6 +1,7 @@
 package fr.ProjetGame2.Screen;
 
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
@@ -14,13 +15,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.utils.Timer;
 
 import fr.ProjetGame2.Elements.Block;
 import fr.ProjetGame2.Elements.Joueur;
 import fr.ProjetGame2.Elements.Plateau;
-import fr.ProjetGame2.Elements.Temps;
 import fr.ProjetGame2.Elements.World;
+import fr.ProjetGame2.Elements.Score;
 import fr.ProjetGame2.Game.ProjetGame2;
 import fr.ProjetGame2.View.WorldRenderer;
 	 
@@ -35,12 +35,14 @@ import fr.ProjetGame2.View.WorldRenderer;
 		private Label point;
 		private TextButton boutonRetour;
 	    private Texture fondEcran;
+	    private Texture fondEcran2;
 	    private Image fond;
+	    private Image fond2;
 	    private int nbpoint =0;
-	    private ActionEvent e;
 	    private int sec = 0;
-    	private int min =10;
-    	private int score;
+    	private int min =20;
+    	private TextButton boutonRejouer;
+    	public ArrayList<Score> Scores = new ArrayList<Score>();
 	
 	    
 	    private Joueur joueur1;
@@ -72,13 +74,15 @@ import fr.ProjetGame2.View.WorldRenderer;
 	        renderer = new WorldRenderer(world, false, monPlateau);
 	        Gdx.input.setInputProcessor(this);
 	        stage = new Stage();
-	    	Gdx.input.setInputProcessor(stage);
 	    	skin = new Skin(Gdx.files.internal("uiskin/uiskin.json"));
 	    	
 	    	//Ajout Du fond d'écran
 	    	fondEcran = new Texture(Gdx.files.internal("images/fond.jpg"));
+	    	fondEcran2 = new Texture(Gdx.files.internal("images/fond2.jpg"));
+	    	fond2 = new Image(fondEcran2);
 	    	fond = new Image(fondEcran);
 			stage.addActor(fond);
+			stage.addActor(fond2);
 			
 			//ajout du label titre
 	    	titre = new Label("Menu Jeux",skin);
@@ -100,20 +104,24 @@ import fr.ProjetGame2.View.WorldRenderer;
 			boutonRetour.setPosition(100, 20);
 			boutonRetour.setColor(Color.CYAN);
 			stage.addActor(boutonRetour);
+			
+			//ajout bouton Rejouer
+			boutonRejouer = new TextButton("Rejouer",skin);
+			boutonRejouer.setPosition(Gdx.app.getGraphics().getWidth()/2 - boutonRejouer.getWidth()/2 , Gdx.app.getGraphics().getHeight()-250);
+			boutonRejouer.setColor(Color.CYAN);
+			boutonRejouer.setVisible(false);
+			stage.addActor(boutonRejouer);
+			
 			 
 
 	    }
 	 
 	    @Override
 	    public void render(float delta) {
-	    	
-
-	    	
-//	    	if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)||Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+	    	stage.act();
+	        stage.draw();
+	        fond2.setVisible(false);
 	    	Gdx.input.setInputProcessor(this);
-//	    	}
-	 
-	    	
 	    	if(min !=0){
 		    	 if (sec == 0) {
 		                min--;
@@ -123,24 +131,31 @@ import fr.ProjetGame2.View.WorldRenderer;
 		          }
 		    	 temps.setText(String.valueOf(min + ":" + sec));
 		    	 point.setText(String.valueOf("score: " +nbpoint));
+		    	 renderer.render();
 	    	}else{
 	    		if(sec != 0){
 		    		sec--;
 		    		temps.setText(String.valueOf(min + ":" + sec));
 		    		point.setText(String.valueOf("score: " +nbpoint));
-		    		score = nbpoint;
+		    		renderer.render();
 	    		}else{
 	    			//affichage de fin d'écran et enregistrement du score
-	    			point.setText(String.valueOf("score final "+ score));
-	    			temps.setText(String.valueOf("fin du temps"));
-	    		}
-	    	}
-	    	 
-        
-	        stage.act();
-	        stage.draw();
-	        renderer.render();
-	    	
+//	    			game.setScreen(new EndScreen(game));
+	    			titre.setText("Fin de partie");
+	    			point.setText("vous avez effectuer un score de " + nbpoint);
+	    			titre.setPosition(Gdx.app.getGraphics().getWidth()/2- titre.getWidth()/2, Gdx.app.getGraphics().getHeight()-50);
+	    			point.setPosition(Gdx.app.getGraphics().getWidth()/2- titre.getWidth(), Gdx.app.getGraphics().getHeight()-150);
+	    			temps.setVisible(false);
+	    			Gdx.input.setInputProcessor(stage);
+	    			boutonRejouer.setVisible(true);
+	    			if (boutonRejouer.isPressed())
+	    	        	game.setScreen(new GameScreen(game));
+	    			if (boutonRetour.isPressed())
+	    		       	game.setScreen(new MenuScreen(game));
+	    			fond.setVisible(false);
+	    			fond2.setVisible(true);
+	    			boutonRetour.setPosition(Gdx.app.getGraphics().getWidth()/2 - boutonRejouer.getWidth()/2 , Gdx.app.getGraphics().getHeight()-300);
+	    	} }
 	    }
 	 
 	    @Override
