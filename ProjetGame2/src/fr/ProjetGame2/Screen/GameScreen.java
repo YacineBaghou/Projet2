@@ -1,5 +1,7 @@
 package fr.ProjetGame2.Screen;
 
+import java.awt.event.ActionEvent;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.InputProcessor;
@@ -12,10 +14,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.Timer;
 
 import fr.ProjetGame2.Elements.Block;
 import fr.ProjetGame2.Elements.Joueur;
 import fr.ProjetGame2.Elements.Plateau;
+import fr.ProjetGame2.Elements.Temps;
 import fr.ProjetGame2.Elements.World;
 import fr.ProjetGame2.Game.ProjetGame2;
 import fr.ProjetGame2.View.WorldRenderer;
@@ -27,13 +31,16 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    private Stage stage;
 		private Skin skin;
 		private Label titre;
-		private Label score;
+		private Label temps;
 		private Label point;
 		private TextButton boutonRetour;
 	    private Texture fondEcran;
 	    private Image fond;
 	    private int nbpoint =0;
-	 
+	    private ActionEvent e;
+	    private int sec = 0;
+    	private int min =10;
+    	private int score;
 	
 	    
 	    private Joueur joueur1;
@@ -75,16 +82,18 @@ import fr.ProjetGame2.View.WorldRenderer;
 			
 			//ajout du label titre
 	    	titre = new Label("Menu Jeux",skin);
-			titre.setPosition(Gdx.app.getGraphics().getWidth()/4-titre.getWidth()/2, Gdx.app.getGraphics().getHeight()-50);
+			titre.setPosition(50, Gdx.app.getGraphics().getHeight()-50);
 			stage.addActor(titre);
 			
 			//Affichage du score
-			score = new Label("Score:",skin);
-			score.setPosition(Gdx.app.getGraphics().getWidth()/4-score.getWidth()/2, Gdx.app.getGraphics().getHeight()-100);
-			stage.addActor(score);
 			point = new Label("0",skin);
-			point.setPosition(Gdx.app.getGraphics().getWidth()/4-point.getWidth()/2, Gdx.app.getGraphics().getHeight()-150);
+			point.setPosition(50, Gdx.app.getGraphics().getHeight()-150);
 			stage.addActor(point);
+			
+			//Affichage du temps
+			temps = new Label("Score:",skin);
+			temps.setPosition(50, Gdx.app.getGraphics().getHeight()-200);
+			stage.addActor(temps);
 			
 			//Ajout du bouton pour quitter l'écran
 			boutonRetour = new TextButton("Menu",skin);
@@ -104,25 +113,34 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    	Gdx.input.setInputProcessor(this);
 //	    	}
 	 
-	    	//incrementation du label score(test)
-
-	        nbpoint++;
-	        point.setText(String.valueOf(nbpoint));
-	        //Action du bouton retour au menu
-	       
-	        
+	    	
+	    	if(min !=0){
+		    	 if (sec == 0) {
+		                min--;
+		                sec = 59;
+		          } else{
+		                sec--;
+		          }
+		    	 temps.setText(String.valueOf(min + ":" + sec));
+		    	 point.setText(String.valueOf("score: " +nbpoint));
+	    	}else{
+	    		if(sec != 0){
+		    		sec--;
+		    		temps.setText(String.valueOf(min + ":" + sec));
+		    		point.setText(String.valueOf("score: " +nbpoint));
+		    		score = nbpoint;
+	    		}else{
+	    			//affichage de fin d'écran et enregistrement du score
+	    			point.setText(String.valueOf("score final "+ score));
+	    			temps.setText(String.valueOf("fin du temps"));
+	    		}
+	    	}
+	    	 
+        
 	        stage.act();
 	        stage.draw();
 	        renderer.render();
 	    	
-	        /*if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-		    	if(RetourMenu(Gdx.input.getX(), Gdx.input.getY()) == true){
-		    		game.setScreen(new MenuScreen(game));
-		    		System.out.println("branlette"+ boutonRetour.getX() + boutonRetour.getY());
-		    	}
-	        }*/
-	     
-	        
 	    }
 	 
 	    @Override
@@ -180,7 +198,7 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    		if((screenX>=boutonRetour.getX() && screenX<=boutonRetour.getX()+boutonRetour.getWidth()) && 
 		    			(screenY>= stage.getHeight() - boutonRetour.getY()-35 && screenY<= stage.getHeight() - boutonRetour.getY()-35+boutonRetour.getHeight())){
 	    				game.setScreen(new MenuScreen(game));
-	    				System.out.println("branlette"+ boutonRetour.getX() + boutonRetour.getY());
+	    				System.out.println( boutonRetour.getX() + boutonRetour.getY());
 	    				return false;
 	    		}
 	    		
@@ -192,10 +210,14 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    			monPlateau.jouer(joueur1, 9-(int)unBlock.getPosition().y, (int)unBlock.getPosition().x, 9 - (int)blockDejaJoue.getPosition().y, (int)blockDejaJoue.getPosition().x);
 	    			
 	    			System.out.println("Clické  X:"+ unBlock.getPosition().x +"  Y:"+unBlock.getPosition().y );
+	    			
 	    			blockDejaJoue = null;
+	    			Score(10);
+	    			
 	    		}else{
 	    			blockDejaJoue = unBlock;
 	    			System.out.println("Clické  X:"+ blockDejaJoue.getPosition().x +"  Y:"+blockDejaJoue.getPosition().y );
+	    			
 	    		}
     			
 	    	}
@@ -225,6 +247,10 @@ import fr.ProjetGame2.View.WorldRenderer;
 	        return false;
 	    }
 	 
+	    public void Score(int point){
+	    	nbpoint=nbpoint + point;
+	    	
+	    }
 	    @Override
 	    public boolean mouseMoved(int x, int y) {
 	        // TODO Auto-generated method stub
@@ -252,7 +278,8 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    
 	    
 	    
-	    private Block getBlock(int x, int y){
+	    @SuppressWarnings("unused")
+		private Block getBlock(int x, int y){
 	    	for(Block block:world.getBlocks()){
 	    		if(block.getPosition().x == x && block.getPosition().y == y){
 	    			return block;
