@@ -1,8 +1,6 @@
 package fr.ProjetGame2.Screen;
 
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.InputProcessor;
@@ -15,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-
 import fr.ProjetGame2.Elements.Block;
 import fr.ProjetGame2.Elements.Joueur;
 import fr.ProjetGame2.Elements.Plateau;
@@ -40,9 +37,10 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    private Image fond2;
 	    private int nbpoint =0;
 	    private int sec = 0;
-    	private int min =20;
+    	private int min =5;
     	private TextButton boutonRejouer;
     	public ArrayList<Score> Scores = new ArrayList<Score>();
+    	private Score score1;
 	
 	    
 	    private Joueur joueur1;
@@ -140,9 +138,8 @@ import fr.ProjetGame2.View.WorldRenderer;
 		    		renderer.render();
 	    		}else{
 	    			//affichage de fin d'écran et enregistrement du score
-//	    			game.setScreen(new EndScreen(game));
 	    			titre.setText("Fin de partie");
-	    			point.setText("vous avez effectuer un score de " + nbpoint);
+	    			point.setText("vous avez effectuer un score de " +nbpoint);
 	    			titre.setPosition(Gdx.app.getGraphics().getWidth()/2- titre.getWidth()/2, Gdx.app.getGraphics().getHeight()-50);
 	    			point.setPosition(Gdx.app.getGraphics().getWidth()/2- titre.getWidth(), Gdx.app.getGraphics().getHeight()-150);
 	    			temps.setVisible(false);
@@ -155,7 +152,13 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    			fond.setVisible(false);
 	    			fond2.setVisible(true);
 	    			boutonRetour.setPosition(Gdx.app.getGraphics().getWidth()/2 - boutonRejouer.getWidth()/2 , Gdx.app.getGraphics().getHeight()-300);
-	    	} }
+	    			score1 = new Score(nbpoint);
+	    			Scores.add(score1);
+	    		}	
+	    	} 
+	    }
+	    public ArrayList<Score> getListe(){
+	    	return Scores;
 	    }
 	 
 	    @Override

@@ -1,6 +1,8 @@
 package fr.ProjetGame2.Screen;
 
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -11,8 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-
 import fr.ProjetGame2.Game.ProjetGame2;
+import fr.ProjetGame2.Elements.Score;
 
 public class ScoreScreen implements Screen, InputProcessor{
 	
@@ -25,11 +27,26 @@ public class ScoreScreen implements Screen, InputProcessor{
 	private TextButton boutonRetour;
     private Texture fondEcran;
     private Image fond;
+    private ArrayList<Score>listeScores = new ArrayList<Score>();;
     
-    public ScoreScreen(ProjetGame2 game) {
+    public ArrayList<Score> getListeScores() {
+		return listeScores;
+	}
+
+
+
+	public void setListeScores(ArrayList<Score> listeScores) {
+		this.listeScores = listeScores;
+	}
+
+
+
+	public ScoreScreen(ProjetGame2 game) {
         this.game = game;
     }
-
+    
+    
+    
 	@Override
 	public boolean keyDown(int keycode) {
 		// TODO Auto-generated method stub
