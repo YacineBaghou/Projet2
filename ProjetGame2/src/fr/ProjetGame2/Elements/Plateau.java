@@ -14,6 +14,8 @@ public class Plateau {
 
 	private int tailleX, tailleY;
 	
+	private boolean flagInit = false;
+	
 	public Plateau(Joueur joueur1, Joueur joueur2, int tailleX, int tailleY){ //Constructeur du plateau
 		
 		this.joueur1 = joueur1;
@@ -27,17 +29,19 @@ public class Plateau {
 		
 		for(int x = 0; x<tailleX; x++){
 			for(int y = 0; y<tailleY; y++){
-				Cristal unCristal = new Cristal((int)(Math.random()*4)+1);
+				Cristal unCristal = new Cristal((int)(Math.random()*5)+1);
 				tabCristaux[x][y] = unCristal;
 			}
 		}
 		
-		for(int i=6; i<10; i++){ //Trucage du tableau pour les tests
+		/*for(int i=6; i<10; i++){ //Trucage du tableau pour les tests
 			tabCristaux[9][i] = new Cristal(0);
 			tabCristaux[i][9] = new Cristal(1);
 		}
 		tabCristaux[9][9] = new Cristal(0);
-		tabCristaux[9][8] = new Cristal(1);
+		tabCristaux[9][8] = new Cristal(1);*/
+		trouverCombo();
+		flagInit = true;
 		
 	}
 	
@@ -75,8 +79,9 @@ public class Plateau {
 				faireLeMenage(tabs2);
 				faireLeMenage(tabs);		//On "supprime" les cristaux listés dans tab
 				restructurer();				//On réagence le tableau en supprimant les cases vides, les cristaux au dessus glissent vers le bas, les cases hautes laissées vides sont remplies aléatoirement
-			
-				if(tabs.size() == 0)		//Aucun block n'a été renvoyé
+				trouverCombo();
+				
+				if(tabs.size() == 0 && tabs2.size()==0)		//Aucun block n'a été renvoyé
 				{
 					System.out.println("reswitch");
 					switchCristals(posX1, posY1, posX2, posY2);
@@ -118,7 +123,7 @@ public class Plateau {
 	
 	private boolean verifMemeCouleur( int posX1, int posY1, int posX2, int posY2){   		//Renvoi true si les cristaux dont les coordonnées sont passées en parametre sont de la même couleur
 		
-		if (pickCristal(posX1, posY1).getCouleur() == pickCristal(posX2, posY2).getCouleur())
+		if ( posX1<tailleX && posX2 < tailleX && posY1<tailleY && posY2 < tailleY && posX1>=0 && posX2>=0 && posY1>=0 && posY2 >= 0 && pickCristal(posX1, posY1).getCouleur() == pickCristal(posX2, posY2).getCouleur())
 			return true;
 		else
 			return false;	
@@ -212,6 +217,7 @@ public class Plateau {
 		}*/
 	
 		if(maListe.size() > 2){			//Si la liste du cristal a assez d'élément on renvoi la liste
+			System.out.println(maListe);
 			return maListe;
 		}
 		
@@ -238,7 +244,7 @@ public class Plateau {
 				
 				if ( tabCristaux[i][j].getCouleur() == 6){
 					for(int k = 0; i-k >= 0; k++){
-						if (i-k-1 <= -1){
+						if (i-k <= 0){
 							tabCristaux[i-k][j] =  new Cristal((int)(Math.random()*5)+1);
 						}else{
 							tabCristaux[i-k][j] = tabCristaux[i-k-1][j];
@@ -249,4 +255,45 @@ public class Plateau {
 			}
 		}
 	}
+	
+	
+	private void trouverCombo(){
+		boolean trouveQuelquChose = false;
+		
+    	for(int i = 0; i<tailleX; i++){
+    		for(int j = 0; j<tailleY; j++){
+    			if(tabCristaux[i][j].getCouleur()!=6){
+    				ArrayList<ArrayList<Integer>> maListe = chercheBlock(i, j);
+    				faireLeMenage(maListe);
+    				if (maListe.size()>0){
+    					trouveQuelquChose =true;
+    				}
+    			}
+    		}
+    	}
+    	if(trouveQuelquChose){
+    		if (flagInit){
+    			restructurer();
+    			System.out.println("Combo!!");
+    			trouverCombo();
+    		}else{
+    			randomVoisin();
+    		}
+    	}
+    }
+	
+	private void randomVoisin(){
+		for(int i = 0; i<tailleX; i++){
+    		for(int j = 0; j<tailleY; j++){
+    			
+    			if(tabCristaux[i][j].getCouleur() == 6){
+    				do{
+    					tabCristaux[i][j] = new Cristal((int)(Math.random()*5)+1);
+    					System.out.println("Random!!");
+    				}while(verifMemeCouleur(i, j, i-1, j) || verifMemeCouleur(i, j, i+1, j) || verifMemeCouleur(i, j, i, j-1)||verifMemeCouleur(i, j, i, j+1));
+    			}
+    		}
+		}
+	}
+	
 }
