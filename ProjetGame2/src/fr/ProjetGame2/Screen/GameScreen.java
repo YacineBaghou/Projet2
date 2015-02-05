@@ -37,7 +37,7 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    private Image fond2;
 	    private int nbpoint =0;
 	    private int sec = 0;
-    	private int min =5;
+    	private int min =2000;
     	private TextButton boutonRejouer;
     	public ArrayList<Score> Scores = new ArrayList<Score>();
     	private Score score1;
@@ -306,9 +306,6 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    	
 	    	return null;
 	    }
-	    
-	    
-	    
 	    
 	    
 	    
