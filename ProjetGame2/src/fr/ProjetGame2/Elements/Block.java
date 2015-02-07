@@ -56,11 +56,15 @@ public class Block {
 	
 	public void setDecalage(){
 		if(decalage>0)
-			decalage --;
+			decalage = decalage-3;
 	}
 	
 	public void resetDecalage(){
 		decalage = 36;
+	}
+	
+	public void resetDecalage(int k){
+		decalage = k*36;
 	}
 	
 	public void setDecalage(int decalage){

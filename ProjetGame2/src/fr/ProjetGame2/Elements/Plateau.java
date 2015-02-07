@@ -41,7 +41,7 @@ public class Plateau {
 		}
 		
 		
-		trouverCombo();
+		//trouverCombo();
 		for(int i=6; i<10; i++){ //Trucage du tableau pour les tests
 			tabCristaux[9][i] = new Cristal(0);
 			tabCristaux[i][9] = new Cristal(1);
@@ -247,10 +247,15 @@ public class Plateau {
 	}
 	
 	private void restructurer(){ // Restructurer parcour tabCristaux, quand le cristal courant vaut 6(valeur désignant un espace vide), les cristaux au dessus glisse d'une case vers le bas, les cases laissées vides au dessus sont replies aléatoirement
-		for (int i = 0; i<tailleX; i++) {
-			for (int j = 0; j<tailleY; j++) { 
+		
+		for (int j = 0; j<tailleY; j++) { 
+		int compteDecalage = 0;
+			for (int i = 0; i<tailleX; i++) {
+			
+			
 				
 				if ( tabCristaux[i][j].getCouleur() == 6){
+					compteDecalage++;
 					for(int k = 0; i-k >= 0; k++){
 						if (i-k <= 0){
 							tabCristaux[i-k][j] =  new Cristal((int)(Math.random()*5)+1);							
@@ -262,7 +267,7 @@ public class Plateau {
 						for (Block b:gameScreen.getWorld().getBlocks()){
 							if((b.getPosition().x == j) && (b.getPosition().y == 9-(i-k))){
 								System.out.println("x"+b.getPosition().x+"   y"+b.getPosition().y);
-								b.resetDecalage();
+								b.resetDecalage(compteDecalage);
 							}
 						}
 					}
@@ -290,8 +295,6 @@ public class Plateau {
     	if(trouveQuelquChose){
     		if (flagInit){
     			restructurer();
-    			//System.out.println("Combo!!");
-    			trouverCombo();
     		}else{
     			randomVoisin();
     		}
