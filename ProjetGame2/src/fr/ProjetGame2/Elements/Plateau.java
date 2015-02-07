@@ -2,8 +2,12 @@ package fr.ProjetGame2.Elements;
 
 import java.util.ArrayList;
 
+import fr.ProjetGame2.Screen.GameScreen;
+
 
 public class Plateau {
+	
+	private GameScreen gameScreen;
 
 	private Joueur joueur1;
 	private Joueur joueur2;
@@ -16,7 +20,9 @@ public class Plateau {
 	
 	private boolean flagInit = false;
 	
-	public Plateau(Joueur joueur1, Joueur joueur2, int tailleX, int tailleY){ //Constructeur du plateau
+	public Plateau(Joueur joueur1, Joueur joueur2, int tailleX, int tailleY, GameScreen gameScreen){ //Constructeur du plateau
+		
+		this.gameScreen = gameScreen;
 		
 		this.joueur1 = joueur1;
 		this.joueur2 = joueur2;
@@ -34,19 +40,19 @@ public class Plateau {
 			}
 		}
 		
-		/*for(int i=6; i<10; i++){ //Trucage du tableau pour les tests
+		
+		trouverCombo();
+		for(int i=6; i<10; i++){ //Trucage du tableau pour les tests
 			tabCristaux[9][i] = new Cristal(0);
 			tabCristaux[i][9] = new Cristal(1);
 		}
 		tabCristaux[9][9] = new Cristal(0);
-		tabCristaux[9][8] = new Cristal(1);*/
-		trouverCombo();
+		tabCristaux[9][8] = new Cristal(1);
 		flagInit = true;
 		
 	}
 	
-	public String toString(){   //toString pour faciliter l'affichage et le debogage
-		
+	public String toString(){   //toString pour faciliter l'affichage et le debogage	
 		String maChaineRetour="";
 		
 		for(Cristal[] ligne: tabCristaux){
@@ -79,7 +85,9 @@ public class Plateau {
 				faireLeMenage(tabs2);
 				faireLeMenage(tabs);		//On "supprime" les cristaux listés dans tab
 				restructurer();				//On réagence le tableau en supprimant les cases vides, les cristaux au dessus glissent vers le bas, les cases hautes laissées vides sont remplies aléatoirement
-				trouverCombo();
+				
+				
+				//	trouverCombo();
 				
 				if(tabs.size() == 0 && tabs2.size()==0)		//Aucun block n'a été renvoyé
 				{
@@ -245,9 +253,17 @@ public class Plateau {
 				if ( tabCristaux[i][j].getCouleur() == 6){
 					for(int k = 0; i-k >= 0; k++){
 						if (i-k <= 0){
-							tabCristaux[i-k][j] =  new Cristal((int)(Math.random()*5)+1);
+							tabCristaux[i-k][j] =  new Cristal((int)(Math.random()*5)+1);							
 						}else{
 							tabCristaux[i-k][j] = tabCristaux[i-k-1][j];
+							
+						}
+						
+						for (Block b:gameScreen.getWorld().getBlocks()){
+							if((b.getPosition().x == j) && (b.getPosition().y == 9-(i-k))){
+								System.out.println("x"+b.getPosition().x+"   y"+b.getPosition().y);
+								b.resetDecalage();
+							}
 						}
 					}
 				}
@@ -257,7 +273,7 @@ public class Plateau {
 	}
 	
 	
-	private void trouverCombo(){
+	public void trouverCombo(){
 		boolean trouveQuelquChose = false;
 		
     	for(int i = 0; i<tailleX; i++){
@@ -274,7 +290,7 @@ public class Plateau {
     	if(trouveQuelquChose){
     		if (flagInit){
     			restructurer();
-    			System.out.println("Combo!!");
+    			//System.out.println("Combo!!");
     			trouverCombo();
     		}else{
     			randomVoisin();
@@ -289,11 +305,21 @@ public class Plateau {
     			if(tabCristaux[i][j].getCouleur() == 6){
     				do{
     					tabCristaux[i][j] = new Cristal((int)(Math.random()*5)+1);
-    					System.out.println("Random!!");
+    					//System.out.println("Random!!");
     				}while(verifMemeCouleur(i, j, i-1, j) || verifMemeCouleur(i, j, i+1, j) || verifMemeCouleur(i, j, i, j-1)||verifMemeCouleur(i, j, i, j+1));
     			}
     		}
 		}
 	}
 	
+	
+	
+	private boolean toutMouvementTermine(){
+		boolean retour = false;
+		for(Block b:gameScreen.getWorld().getBlocks()){
+			 if(b.getDecalage()>0)
+				 retour = true;
+		}
+		return retour;
+	}
 }

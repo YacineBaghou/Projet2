@@ -7,6 +7,8 @@ public class Block {
  
     static final float SIZE = 1f;
  
+    private int decalage = 0;
+    
     Vector2     position = new Vector2();
     Rectangle   bounds = new Rectangle();
  
@@ -16,8 +18,18 @@ public class Block {
         this.bounds.height = SIZE;
         this.bounds.x = this.position.x;
         this.bounds.y = this.position.y;
+        this.decalage = 0;
     }
 
+    public Block(Vector2 pos, int decalage) { //Vector2 class Java ayant pour paramétres x et y
+        this.position = pos;
+        this.bounds.width = SIZE;
+        this.bounds.height = SIZE;
+        this.bounds.x = this.position.x;
+        this.bounds.y = this.position.y;
+        this.decalage = decalage;
+    }
+    
 	public Vector2 getPosition() {
 		return position;
 	}
@@ -36,5 +48,22 @@ public class Block {
 
 	public static float getSize() {
 		return SIZE;
+	}
+	
+	public int getDecalage(){
+		return decalage;
+	}
+	
+	public void setDecalage(){
+		if(decalage>0)
+			decalage --;
+	}
+	
+	public void resetDecalage(){
+		decalage = 36;
+	}
+	
+	public void setDecalage(int decalage){
+		this.decalage = decalage;
 	}
 }

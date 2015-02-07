@@ -104,6 +104,8 @@ public class WorldRenderer {
     }
  
     private void drawBlocks() {
+    	boolean testDessinFinis = true;
+    	
     	for(Block block : world.getBlocks()){
     		//System.out.println("X:" + block.getPosition().x + "  Y:" + block.getPosition().y);
     		int couleurTemp = monPlateau.pickCristal( 9 - Math.round(block.getPosition().y),Math.round(block.getPosition().x)).getCouleur();
@@ -111,11 +113,16 @@ public class WorldRenderer {
     		   spriteBatch.draw(
     	                alea, 
     	                block.getPosition().x * ppuX + 200, 
-    	                block.getPosition().y * ppuY + 40, 
+    	                block.getPosition().y * ppuY + 40+block.getDecalage(), 
     	                Block.getSize() * ppuX, 
     	                Block.getSize() * ppuY);
+    		   block.setDecalage();
+    		   if(block.getDecalage()>0)
+    			   testDessinFinis = false;
     	}
     	
+    	if (testDessinFinis)
+    		monPlateau.trouverCombo();
     }
  
   

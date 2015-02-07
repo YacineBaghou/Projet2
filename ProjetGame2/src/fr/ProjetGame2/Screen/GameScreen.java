@@ -65,7 +65,7 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    	//Ajout de nouveau joueur et instanciation du plateau
 			joueur1 = new Joueur("Alex");
 			joueur2 = new Joueur("Paulo");
-			monPlateau = new Plateau(joueur1, joueur2, 10, 10);
+			monPlateau = new Plateau(joueur1, joueur2, 10, 10, this);
 			System.out.println("Creation d'une partie");
 	    	
 	        world = new World();
@@ -287,10 +287,10 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    	
 	    	
 	    	coordX = (int)((x-200)/36);
-	    	coordY = (int)(((int)stage.getHeight() - y - 40)/34.285);
-	    	
+	    	coordY = (int)(((int)stage.getHeight() - y - 40)/34.285);	    	
+	    
 	    	Block retour = new Block(new Vector2(coordX,coordY));
-	    	
+	    	    
 	    	return retour;
 	    }
 	    
@@ -308,7 +308,9 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    }
 	    
 	    
-	    
+	    public World getWorld(){
+	    	return world;
+	    }
 	    
 	    
 	    
