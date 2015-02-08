@@ -2,10 +2,6 @@ package fr.ProjetGame2.Screen;
 
 
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
@@ -21,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.Timer.Task;
 
 import fr.ProjetGame2.Elements.Block;
 import fr.ProjetGame2.Elements.Joueur;
@@ -47,12 +42,10 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    private Image fond2;
 	    private int nbpoint =0;
 	    private int sec = 0;
-    	private int min =5;
+    	private int min =100;
     	private TextButton boutonRejouer;
     	private Score score1;
     	static BufferedWriter out = null;
-    	private Timer timer;
-    	private float deltaTime;
 	
 	    
 	    private Joueur joueur1;
@@ -139,8 +132,6 @@ import fr.ProjetGame2.View.WorldRenderer;
 	        stage.draw();
 	        fond2.setVisible(false);
 	    	Gdx.input.setInputProcessor(this);
-	    	deltaTime = Gdx.graphics.getDeltaTime();
-	    	System.out.println(deltaTime);
 	    	if(min !=0){
 		    	 if (sec == 0) {
 		                min--;
