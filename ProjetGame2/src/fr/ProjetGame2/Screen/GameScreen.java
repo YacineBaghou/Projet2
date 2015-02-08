@@ -1,10 +1,17 @@
 package fr.ProjetGame2.Screen;
 
-import java.util.ArrayList;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
@@ -37,10 +44,10 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    private Image fond2;
 	    private int nbpoint =0;
 	    private int sec = 0;
-    	private int min =2000;
+    	private int min =5;
     	private TextButton boutonRejouer;
-    	public ArrayList<Score> Scores = new ArrayList<Score>();
     	private Score score1;
+    	static BufferedWriter out = null;
 	
 	    
 	    private Joueur joueur1;
@@ -72,11 +79,11 @@ import fr.ProjetGame2.View.WorldRenderer;
 	        renderer = new WorldRenderer(world, false, monPlateau);
 	        Gdx.input.setInputProcessor(this);
 	        stage = new Stage();
-	    	skin = new Skin(Gdx.files.internal("uiskin/uiskin.json"));
+	    	skin = new Skin(Gdx.files.internal("assets/uiskin.json"));
 	    	
 	    	//Ajout Du fond d'écran
-	    	fondEcran = new Texture(Gdx.files.internal("images/fond.jpg"));
-	    	fondEcran2 = new Texture(Gdx.files.internal("images/fond2.jpg"));
+	    	fondEcran = new Texture(Gdx.files.internal("assets/fond.jpg"));
+	    	fondEcran2 = new Texture(Gdx.files.internal("assets/fond2.jpg"));
 	    	fond2 = new Image(fondEcran2);
 	    	fond = new Image(fondEcran);
 			stage.addActor(fond);
@@ -139,7 +146,8 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    		}else{
 	    			//affichage de fin d'écran et enregistrement du score
 	    			titre.setText("Fin de partie");
-	    			point.setText("vous avez effectuer un score de " +nbpoint);
+	    			score1 = new Score(nbpoint);
+	    			point.setText("vous avez effectuer un score de " + score1.getScore());
 	    			titre.setPosition(Gdx.app.getGraphics().getWidth()/2- titre.getWidth()/2, Gdx.app.getGraphics().getHeight()-50);
 	    			point.setPosition(Gdx.app.getGraphics().getWidth()/2- titre.getWidth(), Gdx.app.getGraphics().getHeight()-150);
 	    			temps.setVisible(false);
@@ -152,14 +160,12 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    			fond.setVisible(false);
 	    			fond2.setVisible(true);
 	    			boutonRetour.setPosition(Gdx.app.getGraphics().getWidth()/2 - boutonRejouer.getWidth()/2 , Gdx.app.getGraphics().getHeight()-300);
-	    			score1 = new Score(nbpoint);
-	    			Scores.add(score1);
+//	    			FileHandle fichier = Gdx.files.internal("scores.txt");
+//	    		    fichier.writeString("aaaaaaa", false);
 	    		}	
 	    	} 
 	    }
-	    public ArrayList<Score> getListe(){
-	    	return Scores;
-	    }
+	    
 	 
 	    @Override
 	    public void resize(int width, int height) {
