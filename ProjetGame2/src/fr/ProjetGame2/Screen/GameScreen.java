@@ -1,7 +1,12 @@
 package fr.ProjetGame2.Screen;
 
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Scanner;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
@@ -16,7 +21,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.utils.Timer;
 
 import fr.ProjetGame2.Elements.Block;
 import fr.ProjetGame2.Elements.Joueur;
@@ -42,10 +46,13 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    private Image fond2;
 	    private int nbpoint =0;
 	    private int sec = 0;
-    	private int min =100;
+    	private int min =5;
     	private TextButton boutonRejouer;
     	private Score score1;
     	static BufferedWriter out = null;
+    	private String chaineMeilleurScore;
+    	private int meilleurScore;
+    	
 	
 	    
 	    private Joueur joueur1;
@@ -166,9 +173,49 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    			fond2.setVisible(true);
 	    			boutonRetour.setPosition(Gdx.app.getGraphics().getWidth()/2 - boutonRejouer.getWidth()/2 , Gdx.app.getGraphics().getHeight()-300);
 	    			FileHandle fichier = Gdx.files.absolute("C:/Program Files (x86)/eclipse/workspace/Projet2/ProjetGame2-desktop/bin/assets/scores.txt");
-	    		    fichier.writeString(String.valueOf("dernier score: " +score1.getScore()), false);
+	    		    chaineMeilleurScore = getStringFromInputStream(fichier.read());
+//	    		    System.out.println(chaineMeilleurScore);
+	    		    int meilleurScore = Integer.parseInt(chaineMeilleurScore);
+	    		    if(meilleurScore < Integer.parseInt(String.valueOf(score1.getScore()))){
+	    		    	fichier.writeString(String.valueOf(score1.getScore()), false);
+	    		    }
+	    			
 	    		}	
 	    	} 
+	    }
+	    private static String getStringFromInputStream(InputStream is) {
+
+    BufferedReader br = null;
+    StringBuilder sb = new StringBuilder();
+
+    String line;
+    try {
+
+        br = new BufferedReader(new InputStreamReader(is));
+        while ((line = br.readLine()) != null) {
+            sb.append(line);
+        }
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    } finally {
+        if (br != null) {
+            try {
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    return sb.toString();     
+}
+
+
+		static String convertStreamToString(InputStream is) {
+	        @SuppressWarnings("resource")
+			Scanner s = new Scanner(is).useDelimiter("\\A");
+	        return s.hasNext() ? s.next() : "";
 	    }
 	    
 	 

@@ -138,7 +138,7 @@ public class ScoreScreen implements Screen, InputProcessor{
 		stage.act();
         stage.draw();
         if(fichier.exists()==true){
-        	score.setText(fichier.readString());
+        	score.setText("Meilleur score: " + fichier.readString());
         }else{
         	score.setText("Il n'y a aucun score enregistre");
         }
