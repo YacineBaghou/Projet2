@@ -70,4 +70,9 @@ public class Block {
 	public void setDecalage(int decalage){
 		this.decalage = decalage;
 	}
+	
+	public void setBrillant(){
+		
+	}
+	
 }

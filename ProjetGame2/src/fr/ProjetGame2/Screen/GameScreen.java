@@ -306,19 +306,6 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    }
 	    
 	    
-	    
-	    @SuppressWarnings("unused")
-		private Block getBlock(int x, int y){
-	    	for(Block block:world.getBlocks()){
-	    		if(block.getPosition().x == x && block.getPosition().y == y){
-	    			return block;
-	    		}
-	    	}
-	    	
-	    	return null;
-	    }
-	    
-	    
 	    public World getWorld(){
 	    	return world;
 	    }

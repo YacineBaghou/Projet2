@@ -42,12 +42,12 @@ public class Plateau {
 		
 		
 		//trouverCombo();
-		for(int i=6; i<10; i++){ //Trucage du tableau pour les tests
+		/*for(int i=6; i<10; i++){ //Trucage du tableau pour les tests
 			tabCristaux[9][i] = new Cristal(0);
 			tabCristaux[i][9] = new Cristal(1);
 		}
 		tabCristaux[9][9] = new Cristal(0);
-		tabCristaux[9][8] = new Cristal(1);
+		tabCristaux[9][8] = new Cristal(1);*/
 		flagInit = true;
 		
 	}
@@ -87,7 +87,7 @@ public class Plateau {
 				restructurer();				//On réagence le tableau en supprimant les cases vides, les cristaux au dessus glissent vers le bas, les cases hautes laissées vides sont remplies aléatoirement
 				
 				
-				//	trouverCombo();
+				//trouverCombo();
 				
 				if(tabs.size() == 0 && tabs2.size()==0)		//Aucun block n'a été renvoyé
 				{
