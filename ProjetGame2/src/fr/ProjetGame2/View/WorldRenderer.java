@@ -78,17 +78,17 @@ public class WorldRenderer {
         
         
    	  	gemmes = new ArrayList<Texture>();
-    	blanc = new Texture(Gdx.files.internal("images/gemWhite.png"));
+    	blanc = new Texture(Gdx.files.internal("assets/gemWhite.png"));
     	gemmes.add(blanc);
-    	vert = new Texture(Gdx.files.internal("images/gemGreen.png"));
+    	vert = new Texture(Gdx.files.internal("assets/gemGreen.png"));
     	gemmes.add(vert);
-    	orange = new Texture(Gdx.files.internal("images/gemOrange.png"));
+    	orange = new Texture(Gdx.files.internal("assets/gemOrange.png"));
     	gemmes.add(orange);
-    	rouge = new Texture(Gdx.files.internal("images/gemRed.png"));
+    	rouge = new Texture(Gdx.files.internal("assets/gemRed.png"));
     	gemmes.add(rouge);
-    	violet = new Texture(Gdx.files.internal("images/gemPurple.png"));
+    	violet = new Texture(Gdx.files.internal("assets/gemPurple.png"));
     	gemmes.add(violet);
-    	bleu = new Texture(Gdx.files.internal("images/gemBlue.png"));
+    	bleu = new Texture(Gdx.files.internal("assets/gemBlue.png"));
     	gemmes.add(bleu);
         
         

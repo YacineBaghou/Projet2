@@ -24,12 +24,11 @@ public class ScoreScreen implements Screen, InputProcessor{
 	private Skin skin;
 	private Label titre;
 	private Label score;
-	private Label point;
 	private TextButton boutonRetour;
     private Texture fondEcran;
     private Image fond;
     private ArrayList<Score>listeScores = new ArrayList<Score>();
-    private FileHandle fichier = Gdx.files.internal("scores.txt");
+    FileHandle fichier = Gdx.files.absolute("C:/Program Files (x86)/eclipse/workspace/Projet2/ProjetGame2-desktop/bin/assets/scores.txt");
     
     
     public ArrayList<Score> getListeScores() {

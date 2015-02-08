@@ -20,6 +20,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
+
 import fr.ProjetGame2.Elements.Block;
 import fr.ProjetGame2.Elements.Joueur;
 import fr.ProjetGame2.Elements.Plateau;
@@ -48,6 +51,8 @@ import fr.ProjetGame2.View.WorldRenderer;
     	private TextButton boutonRejouer;
     	private Score score1;
     	static BufferedWriter out = null;
+    	private Timer timer;
+    	private float deltaTime;
 	
 	    
 	    private Joueur joueur1;
@@ -117,6 +122,13 @@ import fr.ProjetGame2.View.WorldRenderer;
 			boutonRejouer.setVisible(false);
 			stage.addActor(boutonRejouer);
 			
+			//permet de réinitialiser l'écran tout les 5 sec
+//			Timer.schedule(new Task() {
+//	            public void run() {
+//	                game.setScreen(new GameScreen(game));
+//	            }
+//	        }, 5);
+			
 			 
 
 	    }
@@ -127,6 +139,8 @@ import fr.ProjetGame2.View.WorldRenderer;
 	        stage.draw();
 	        fond2.setVisible(false);
 	    	Gdx.input.setInputProcessor(this);
+	    	deltaTime = Gdx.graphics.getDeltaTime();
+	    	System.out.println(deltaTime);
 	    	if(min !=0){
 		    	 if (sec == 0) {
 		                min--;
@@ -160,8 +174,8 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    			fond.setVisible(false);
 	    			fond2.setVisible(true);
 	    			boutonRetour.setPosition(Gdx.app.getGraphics().getWidth()/2 - boutonRejouer.getWidth()/2 , Gdx.app.getGraphics().getHeight()-300);
-//	    			FileHandle fichier = Gdx.files.internal("scores.txt");
-//	    		    fichier.writeString("aaaaaaa", false);
+	    			FileHandle fichier = Gdx.files.absolute("C:/Program Files (x86)/eclipse/workspace/Projet2/ProjetGame2-desktop/bin/assets/scores.txt");
+	    		    fichier.writeString(String.valueOf("dernier score: " +score1.getScore()), false);
 	    		}	
 	    	} 
 	    }
