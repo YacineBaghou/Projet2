@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -23,11 +24,12 @@ public class ScoreScreen implements Screen, InputProcessor{
 	private Skin skin;
 	private Label titre;
 	private Label score;
-	private Label point;
 	private TextButton boutonRetour;
     private Texture fondEcran;
     private Image fond;
-    private ArrayList<Score>listeScores = new ArrayList<Score>();;
+    private ArrayList<Score>listeScores = new ArrayList<Score>();
+    FileHandle fichier = Gdx.files.absolute("C:/Program Files (x86)/eclipse/workspace/Projet2/ProjetGame2-desktop/bin/assets/scores.txt");
+    
     
     public ArrayList<Score> getListeScores() {
 		return listeScores;
@@ -97,13 +99,14 @@ public class ScoreScreen implements Screen, InputProcessor{
 
 	@Override
 	public void show() {
-    	Gdx.input.setInputProcessor(stage);
-        stage = new Stage();
-    	Gdx.input.setInputProcessor(stage);
-    	skin = new Skin(Gdx.files.internal("uiskin/uiskin.json"));
     	
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
+    	skin = new Skin(Gdx.files.internal("assets/uiskin.json"));
+//	    fichier.writeString("aaaaaaa", false);
+		
     	//fond d'écran
-    	fondEcran = new Texture(Gdx.files.internal("images/fond2.jpg"));
+    	fondEcran = new Texture(Gdx.files.internal("assets/fond2.jpg"));
     	fond = new Image(fondEcran);
 		stage.addActor(fond);
     	
@@ -113,12 +116,12 @@ public class ScoreScreen implements Screen, InputProcessor{
 		stage.addActor(titre);
 		
 		//différents scores
-		score = new Label("Score 1 : 10000",skin);
-		score.setPosition(Gdx.app.getGraphics().getWidth()/2-score.getWidth()/2, Gdx.app.getGraphics().getHeight()-100);
+		score = new Label("",skin);
+		score.setPosition(Gdx.app.getGraphics().getWidth()/4-score.getWidth()/2, Gdx.app.getGraphics().getHeight()-100);
 		stage.addActor(score);
-		point = new Label("Score 2 : 984595",skin);
-		point.setPosition(Gdx.app.getGraphics().getWidth()/2-point.getWidth()/2, Gdx.app.getGraphics().getHeight()-150);
-		stage.addActor(point);
+//		point = new Label("Score 2 : 984595",skin);
+//		point.setPosition(Gdx.app.getGraphics().getWidth()/2-point.getWidth()/2, Gdx.app.getGraphics().getHeight()-150);
+//		stage.addActor(point);
 		
 		//bouton retour au menu
 		boutonRetour = new TextButton("Menu",skin);
@@ -134,7 +137,11 @@ public class ScoreScreen implements Screen, InputProcessor{
 	public void render(float delta) {
 		stage.act();
         stage.draw();
-        
+        if(fichier.exists()==true){
+        	score.setText(fichier.readString());
+        }else{
+        	score.setText("Il n'y a aucun score enregistre");
+        }
         //action du bouton retour menu
         if (boutonRetour.isPressed())
 	       	game.setScreen(new MenuScreen(game));

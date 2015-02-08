@@ -59,11 +59,11 @@ public class MenuScreen implements Screen, InputProcessor {
 		 
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
-		skin = new Skin(Gdx.files.internal("uiskin/uiskin.json"));
+		skin = new Skin(Gdx.files.internal("assets/uiskin.json"));
 		//b = new Button();
 		//b.setPosition(Gdx.app.getGraphics().getWidth()/2-titre.getWidth()/2, Gdx.app.getGraphics().getHeight()-50);
 		//image de fond d'écran
-		fondEcran = new Texture(Gdx.files.internal("images/jewel.jpg"));
+		fondEcran = new Texture(Gdx.files.internal("assets/jewel.jpg"));
 		fond = new Image(fondEcran);
 		stage.addActor(fond);
 		
