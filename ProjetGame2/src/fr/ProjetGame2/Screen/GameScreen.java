@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.InputProcessor;
@@ -21,8 +23,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 
 import fr.ProjetGame2.Elements.Block;
+import fr.ProjetGame2.Elements.Chrono;
 import fr.ProjetGame2.Elements.Joueur;
 import fr.ProjetGame2.Elements.Plateau;
 import fr.ProjetGame2.Elements.World;
@@ -52,7 +57,6 @@ import fr.ProjetGame2.View.WorldRenderer;
     	static BufferedWriter out = null;
     	private String chaineMeilleurScore;
     	private int meilleurScore;
-    	
 	
 	    
 	    private Joueur joueur1;
@@ -123,29 +127,29 @@ import fr.ProjetGame2.View.WorldRenderer;
 			stage.addActor(boutonRejouer);
 			
 			//permet de réinitialiser l'écran tout les 5 sec
-//			Timer.schedule(new Task() {
-//	            public void run() {
-//	                game.setScreen(new GameScreen(game));
-//	            }
-//	        }, 5);
 			
-			 
+			
+			//ajout Chrono
 
 	    }
 	 
-	    @Override
+	    
 	    public void render(float delta) {
 	    	stage.act();
 	        stage.draw();
 	        fond2.setVisible(false);
 	    	Gdx.input.setInputProcessor(this);
+	    	
 	    	if(min !=0){
 		    	 if (sec == 0) {
-		                min--;
-		                sec = 59;
+		             min--;
+		             sec = 59;
 		          } else{
-		                sec--;
+		        	  
+		    	            	sec--;
+		    	           
 		          }
+		    	
 		    	 temps.setText(String.valueOf(min + ":" + sec));
 		    	 point.setText(String.valueOf("score: " +nbpoint));
 		    	 renderer.render();
@@ -174,8 +178,7 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    			boutonRetour.setPosition(Gdx.app.getGraphics().getWidth()/2 - boutonRejouer.getWidth()/2 , Gdx.app.getGraphics().getHeight()-300);
 	    			FileHandle fichier = Gdx.files.absolute("C:/Program Files (x86)/eclipse/workspace/Projet2/ProjetGame2-desktop/bin/assets/scores.txt");
 	    		    chaineMeilleurScore = getStringFromInputStream(fichier.read());
-//	    		    System.out.println(chaineMeilleurScore);
-	    		    int meilleurScore = Integer.parseInt(chaineMeilleurScore);
+	    		    meilleurScore = Integer.parseInt(chaineMeilleurScore);
 	    		    if(meilleurScore < Integer.parseInt(String.valueOf(score1.getScore()))){
 	    		    	fichier.writeString(String.valueOf(score1.getScore()), false);
 	    		    }
