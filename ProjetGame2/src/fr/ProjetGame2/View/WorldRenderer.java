@@ -121,8 +121,10 @@ public class WorldRenderer {
     			   testDessinFinis = false;
     	}
     	
-    	if (testDessinFinis)
+    	if (testDessinFinis){
+    		monPlateau.setCoeffCombo();
     		monPlateau.trouverCombo();
+    	}
     }
  
   

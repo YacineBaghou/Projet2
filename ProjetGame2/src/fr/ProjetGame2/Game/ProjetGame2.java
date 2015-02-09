@@ -29,5 +29,9 @@ public class ProjetGame2 extends Game {
 		SpriteBatch _batch= new SpriteBatch();
 		return _batch;
 	}
+	
+	public GameScreen getGameScreen(){
+		return menuJeux;
+	}
  
 }
