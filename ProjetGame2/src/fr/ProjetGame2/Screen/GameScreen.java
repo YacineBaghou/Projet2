@@ -8,19 +8,39 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
-<<<<<<< HEAD
-=======
 
 //import javax.swing.JFrame;
 
->>>>>>> origin/master
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.InputProcessor;
@@ -30,14 +50,15 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-<<<<<<< HEAD
-=======
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
+import com.sun.glass.ui.Window;
 
->>>>>>> origin/master
 import fr.ProjetGame2.Elements.Block;
 import fr.ProjetGame2.Elements.Joueur;
 import fr.ProjetGame2.Elements.Plateau;
@@ -51,10 +72,11 @@ import fr.ProjetGame2.View.WorldRenderer;
 	 
 	public class GameScreen implements Screen, InputProcessor {
 		 
-	    private World world;
-	    private WorldRenderer renderer;
+	    private World           world;
+	    private WorldRenderer   renderer;
 	    private Stage stage;
 		private Skin skin;
+		private Skin skin2;
 		private Label titre;
 		private Label temps;
 		private Label point;
@@ -63,33 +85,29 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    private Texture fondEcran2;
 	    private Image fond;
 	    private Image fond2;
-	    private int score =0;
-	    private int sec = 10;
+	    private int score = 0;
+	    private int sec = 30;
     	private int min = 0;
     	private Timer timer;
     	
     	private TextButton boutonRejouer;
     	static BufferedWriter out = null;
     	private String chaineMeilleurScore;
-<<<<<<< HEAD
-    	private int meilleurScore;
-=======
 	
 	    
->>>>>>> origin/master
 	    private Joueur joueur1;
 	    private Joueur joueur2;
 	    private Plateau monPlateau;
 	    private ProjetGame2 game;
+	    
 	    private Block blockDejaJoue = null;
 	    
 	    
-<<<<<<< HEAD
-=======
 	    private boolean flagFindePartie = false;
 	    
+	    private TextField monChamp;
+	    
 	 
->>>>>>> origin/master
 	    public GameScreen(ProjetGame2 game) {
 	        this.game = game;
 			flagFindePartie = false;
@@ -110,6 +128,7 @@ import fr.ProjetGame2.View.WorldRenderer;
 	        Gdx.input.setInputProcessor(this);
 	        stage = new Stage();
 	    	skin = new Skin(Gdx.files.internal("assets/uiskin.json"));
+	        //skin2 = new Skin( Gdx.files.internal( "assets/ui/defaultskin.json" ));
 	    	
 	    	//Ajout Du fond d'écran
 	    	fondEcran = new Texture(Gdx.files.internal("assets/fond.jpg"));
@@ -147,15 +166,15 @@ import fr.ProjetGame2.View.WorldRenderer;
 			boutonRejouer.setVisible(false);
 			stage.addActor(boutonRejouer);
 			
-<<<<<<< HEAD
-=======
 			//permet de réinitialiser l'écran tout les 5 sec
+
+			 monChamp = new TextField("", skin);
+			monChamp.setPosition(50, Gdx.app.getGraphics().getHeight()-200);
 			
 			
 			//ajout Chrono
 			timer = createTimer();
 			timer.start();
->>>>>>> origin/master
 
 	    }
 	 
@@ -178,51 +197,21 @@ import fr.ProjetGame2.View.WorldRenderer;
 						temps.setVisible(false);
 						Gdx.input.setInputProcessor(stage);
 						boutonRejouer.setVisible(true);
-						if (boutonRejouer.isPressed())
+						if (boutonRejouer.isPressed()){
+		    	    		mettreAJourMeilleursScores(lireLesMeilleursScore());
 				        	game.setScreen(new GameScreen(game));
-						if (boutonRetour.isPressed())
+						}
+				        if (boutonRetour.isPressed()){
+		    	    		mettreAJourMeilleursScores(lireLesMeilleursScore());
 					       	game.setScreen(new MenuScreen(game));
-						fond.setVisible(false);
+				        }
+					    fond.setVisible(false);
 						fond2.setVisible(true);
 						boutonRetour.setPosition(Gdx.app.getGraphics().getWidth()/2 - boutonRejouer.getWidth()/2 , Gdx.app.getGraphics().getHeight()-300);
 						
 					}
 				renderer.render();
 			}
-	    private static String getStringFromInputStream(InputStream is) {
-
-    BufferedReader br = null;
-    StringBuilder sb = new StringBuilder();
-
-    String line;
-    try {
-
-        br = new BufferedReader(new InputStreamReader(is));
-        while ((line = br.readLine()) != null) {
-            sb.append(line);
-        }
-
-    } catch (IOException e) {
-        e.printStackTrace();
-    } finally {
-        if (br != null) {
-            try {
-                br.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    return sb.toString();     
-}
-
-
-		static String convertStreamToString(InputStream is) {
-	        @SuppressWarnings("resource")
-			Scanner s = new Scanner(is).useDelimiter("\\A");
-	        return s.hasNext() ? s.next() : "";
-	    }
 	    
 	 
 	    @Override
@@ -279,9 +268,8 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    		
 	    		if((screenX>=boutonRetour.getX() && screenX<=boutonRetour.getX()+boutonRetour.getWidth()) && 
 		    			(screenY>= stage.getHeight() - boutonRetour.getY()-35 && screenY<= stage.getHeight() - boutonRetour.getY()-35+boutonRetour.getHeight())){
-	    				game.setScreen(new MenuScreen(game));
-	    				System.out.println( boutonRetour.getX() + boutonRetour.getY());
-	    				return false;
+    	    		game.setScreen(new MenuScreen(game));
+    	    		return false;
 	    		}
 	    		
 	    		//System.out.println("x"+ screenX +"y"+screenY);
@@ -389,16 +377,17 @@ import fr.ProjetGame2.View.WorldRenderer;
 		          }
 				}else{
 					 sec--;   
-					if(sec == 0)
-					 flagFindePartie=true;
+					if(sec == 0){
+						flagFindePartie=true;
+						stage.addActor(monChamp);
+					}
 				}
 					
 		    	temps.setText(String.valueOf(min + ":" + sec));	        	 
 		      }
 		    };
 		    
-		  // Création d'un timer qui génère un tic
-		  // chaque 500 millième de seconde
+		  // Création d'un timer qui génère un tic chaque seconde
 		  return new Timer (1000, action);
 		}  
 
@@ -406,4 +395,82 @@ import fr.ProjetGame2.View.WorldRenderer;
 		public boolean getFlagFinDePartie(){
 			return this.flagFindePartie;
 		}
+		
+		public ArrayList<String> lireLesMeilleursScore(){
+			
+			ArrayList<String> listeDesScores = new ArrayList<String>();
+			
+			BufferedReader br;
+		    try{
+		    	br = new BufferedReader(new FileReader(new File("fichierDeSauvegardeDiamond.txt")));
+			    
+		    	String line = br.readLine();
+		    	
+		    	while(line!=null){
+		    		listeDesScores.add(line);
+		    		line = br.readLine();
+		    	}
+		    	
+		    	br.close();
+		    	
+		    }catch(IOException e){
+		    	System.out.print(e);
+		    }
+		    
+		    return listeDesScores;		    
+		}
+		
+		public void mettreAJourMeilleursScores(ArrayList<String> listeDesScores){
+			boolean dejaInsere = false;
+			ArrayList<String> nouvelleListe = new ArrayList<String>();
+			for(String s:listeDesScores){
+				if(Integer.parseInt(s.split(":") [0]) > score){
+					nouvelleListe.add(s);
+				}else{
+				
+					if(!dejaInsere){
+						String nom;
+						if(monChamp.getText()!=""){
+							nom = monChamp.getText();
+						}else{  
+							nom="Anonymous";
+						}
+						
+						nouvelleListe.add(String.valueOf(score) + ":"+nom);
+						dejaInsere = true;
+					}
+					nouvelleListe.add(s);
+
+				}
+			}
+			
+			if(listeDesScores.size()==0){
+				String nom;
+				if(monChamp.getText()!=""){
+					nom = monChamp.getText();
+				}else{  
+					nom="Anonymous";
+				}
+			
+				nouvelleListe.add(String.valueOf(score) + ":"+nom);
+			}
+			
+			
+			File f = new File("fichierDeSauvegardeDiamond.txt");
+			try{
+				PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(f)));
+				int count = 0;
+				for(String s:nouvelleListe){
+					if(count<5){
+						count ++;
+						pw.println(s);
+					}
+				}
+				pw.close();
+			}catch(IOException ex){
+				System.out.print(ex);
+			}
+						
+		}
+		
 }

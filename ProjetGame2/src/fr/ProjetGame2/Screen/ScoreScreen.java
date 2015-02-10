@@ -1,13 +1,13 @@
 package fr.ProjetGame2.Screen;
 
 
-<<<<<<< HEAD
+
 import java.io.BufferedReader;
 import java.io.FileReader;
-=======
+
 import java.io.File;
 import java.io.FileWriter;
->>>>>>> origin/master
+
 import java.io.IOException;
 import java.util.ArrayList;
 
