@@ -1,6 +1,9 @@
 package fr.ProjetGame2.Screen;
 
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
@@ -128,6 +131,30 @@ public class ScoreScreen implements Screen, InputProcessor{
 		boutonRetour.setPosition(100, 20);
 		boutonRetour.setColor(Color.CYAN);
 		stage.addActor(boutonRetour);
+		String filePath = "C:/Program Files (x86)/eclipse/workspace/Projet2/ProjetGame2-desktop/bin/assets/scores.txt";
+		try{
+			// Création du flux bufférisé sur un FileReader, immédiatement suivi par un 
+			// try/finally, ce qui permet de ne fermer le flux QUE s'il le reader
+			// est correctement instancié (évite les NullPointerException)
+			BufferedReader buff = new BufferedReader(new FileReader(filePath));
+			 
+			try {
+			String line;
+			// Lecture du fichier ligne par ligne. Cette boucle se termine
+			// quand la méthode retourne la valeur null.
+			while ((line = buff.readLine()) != null) {
+			score.setText(score.getText() + line+"\n");
+			System.out.println(line);
+			//faites ici votre traitement
+			}
+			} finally {
+			// dans tous les cas, on ferme nos flux
+			buff.close();
+			}
+			} catch (IOException ioe) {
+			// erreur de fermeture des flux
+			System.out.println("Erreur --" + ioe.toString());
+			}
 		
 		
 		
@@ -137,11 +164,12 @@ public class ScoreScreen implements Screen, InputProcessor{
 	public void render(float delta) {
 		stage.act();
         stage.draw();
-        if(fichier.exists()==true){
-        	score.setText("Meilleur score: " + fichier.readString());
-        }else{
-        	score.setText("Il n'y a aucun score enregistre");
-        }
+//        if(fichier.exists()==true){
+//        	score.setText("Meilleur score: " + fichier.readString());
+//        	
+//        }else{
+//        	score.setText("Il n'y a aucun score enregistre");
+//        }
         //action du bouton retour menu
         if (boutonRetour.isPressed())
 	       	game.setScreen(new MenuScreen(game));

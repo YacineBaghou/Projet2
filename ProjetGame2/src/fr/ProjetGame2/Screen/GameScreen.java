@@ -7,9 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Scanner;
-
-import javax.swing.JFrame;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.InputProcessor;
@@ -23,11 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.Timer.Task;
-
 import fr.ProjetGame2.Elements.Block;
-import fr.ProjetGame2.Elements.Chrono;
 import fr.ProjetGame2.Elements.Joueur;
 import fr.ProjetGame2.Elements.Plateau;
 import fr.ProjetGame2.Elements.World;
@@ -37,8 +30,8 @@ import fr.ProjetGame2.View.WorldRenderer;
 	 
 	public class GameScreen implements Screen, InputProcessor {
 		 
-	    private World           world;
-	    private WorldRenderer   renderer;
+	    private World world;
+	    private WorldRenderer renderer;
 	    private Stage stage;
 		private Skin skin;
 		private Label titre;
@@ -57,18 +50,13 @@ import fr.ProjetGame2.View.WorldRenderer;
     	static BufferedWriter out = null;
     	private String chaineMeilleurScore;
     	private int meilleurScore;
-	
-	    
 	    private Joueur joueur1;
 	    private Joueur joueur2;
 	    Plateau monPlateau;
 	    private ProjetGame2 game;
-	    
 	    private Block blockDejaJoue = null;
 	    
 	    
-	    
-	 
 	    public GameScreen(ProjetGame2 game) {
 	        this.game = game;
 	        
@@ -126,10 +114,6 @@ import fr.ProjetGame2.View.WorldRenderer;
 			boutonRejouer.setVisible(false);
 			stage.addActor(boutonRejouer);
 			
-			//permet de réinitialiser l'écran tout les 5 sec
-			
-			
-			//ajout Chrono
 
 	    }
 	 
