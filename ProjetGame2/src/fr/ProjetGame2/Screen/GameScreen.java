@@ -1,12 +1,26 @@
 package fr.ProjetGame2.Screen;
 
 
+
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Scanner;
+<<<<<<< HEAD
+=======
+
+//import javax.swing.JFrame;
+
+>>>>>>> origin/master
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.InputProcessor;
@@ -20,13 +34,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 import fr.ProjetGame2.Elements.Block;
 import fr.ProjetGame2.Elements.Joueur;
 import fr.ProjetGame2.Elements.Plateau;
 import fr.ProjetGame2.Elements.World;
-import fr.ProjetGame2.Elements.Score;
 import fr.ProjetGame2.Game.ProjetGame2;
 import fr.ProjetGame2.View.WorldRenderer;
+
+
+
+
 	 
 	public class GameScreen implements Screen, InputProcessor {
 		 
@@ -42,24 +63,36 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    private Texture fondEcran2;
 	    private Image fond;
 	    private Image fond2;
-	    private int nbpoint =0;
-	    private int sec = 0;
-    	private int min =5;
+	    private int score =0;
+	    private int sec = 10;
+    	private int min = 0;
+    	private Timer timer;
+    	
     	private TextButton boutonRejouer;
-    	private Score score1;
     	static BufferedWriter out = null;
     	private String chaineMeilleurScore;
+<<<<<<< HEAD
     	private int meilleurScore;
+=======
+	
+	    
+>>>>>>> origin/master
 	    private Joueur joueur1;
 	    private Joueur joueur2;
-	    Plateau monPlateau;
+	    private Plateau monPlateau;
 	    private ProjetGame2 game;
 	    private Block blockDejaJoue = null;
 	    
 	    
+<<<<<<< HEAD
+=======
+	    private boolean flagFindePartie = false;
+	    
+	 
+>>>>>>> origin/master
 	    public GameScreen(ProjetGame2 game) {
 	        this.game = game;
-	        
+			flagFindePartie = false;
 	    }
 	    
 	    
@@ -97,7 +130,7 @@ import fr.ProjetGame2.View.WorldRenderer;
 			stage.addActor(point);
 			
 			//Affichage du temps
-			temps = new Label("Score:",skin);
+			temps = new Label("Temps:",skin);
 			temps.setPosition(50, Gdx.app.getGraphics().getHeight()-200);
 			stage.addActor(temps);
 			
@@ -114,6 +147,15 @@ import fr.ProjetGame2.View.WorldRenderer;
 			boutonRejouer.setVisible(false);
 			stage.addActor(boutonRejouer);
 			
+<<<<<<< HEAD
+=======
+			//permet de réinitialiser l'écran tout les 5 sec
+			
+			
+			//ajout Chrono
+			timer = createTimer();
+			timer.start();
+>>>>>>> origin/master
 
 	    }
 	 
@@ -123,53 +165,30 @@ import fr.ProjetGame2.View.WorldRenderer;
 	        stage.draw();
 	        fond2.setVisible(false);
 	    	Gdx.input.setInputProcessor(this);
+
 	    	
-	    	if(min !=0){
-		    	 if (sec == 0) {
-		             min--;
-		             sec = 59;
-		          } else{
-		        	  
-		    	            	sec--;
-		    	           
-		          }
-		    	
-		    	 temps.setText(String.valueOf(min + ":" + sec));
-		    	 point.setText(String.valueOf("score: " +nbpoint));
-		    	 renderer.render();
-	    	}else{
-	    		if(sec != 0){
-		    		sec--;
-		    		temps.setText(String.valueOf(min + ":" + sec));
-		    		point.setText(String.valueOf("score: " +nbpoint));
-		    		renderer.render();
-	    		}else{
-	    			//affichage de fin d'écran et enregistrement du score
-	    			titre.setText("Fin de partie");
-	    			score1 = new Score(nbpoint);
-	    			point.setText("vous avez effectuer un score de " + score1.getScore());
-	    			titre.setPosition(Gdx.app.getGraphics().getWidth()/2- titre.getWidth()/2, Gdx.app.getGraphics().getHeight()-50);
-	    			point.setPosition(Gdx.app.getGraphics().getWidth()/2- titre.getWidth(), Gdx.app.getGraphics().getHeight()-150);
-	    			temps.setVisible(false);
-	    			Gdx.input.setInputProcessor(stage);
-	    			boutonRejouer.setVisible(true);
-	    			if (boutonRejouer.isPressed())
-	    	        	game.setScreen(new GameScreen(game));
-	    			if (boutonRetour.isPressed())
-	    		       	game.setScreen(new MenuScreen(game));
-	    			fond.setVisible(false);
-	    			fond2.setVisible(true);
-	    			boutonRetour.setPosition(Gdx.app.getGraphics().getWidth()/2 - boutonRejouer.getWidth()/2 , Gdx.app.getGraphics().getHeight()-300);
-	    			FileHandle fichier = Gdx.files.absolute("C:/Program Files (x86)/eclipse/workspace/Projet2/ProjetGame2-desktop/bin/assets/scores.txt");
-	    		    chaineMeilleurScore = getStringFromInputStream(fichier.read());
-	    		    meilleurScore = Integer.parseInt(chaineMeilleurScore);
-	    		    if(meilleurScore < Integer.parseInt(String.valueOf(score1.getScore()))){
-	    		    	fichier.writeString(String.valueOf(score1.getScore()), false);
-	    		    }
-	    			
-	    		}	
-	    	} 
-	    }
+			if(!flagFindePartie){
+					point.setText(String.valueOf("Score: " +score));
+					temps.setText(String.valueOf(min + ":" + sec));			}else{
+			//affichage de fin d'écran et enregistrement du score
+			titre.setText("Fin de partie");
+			point.setText("vous avez effectuer un score de "+ score);
+						titre.setPosition(Gdx.app.getGraphics().getWidth()/2- titre.getWidth()/2, Gdx.app.getGraphics().getHeight()-50);
+						point.setPosition(Gdx.app.getGraphics().getWidth()/2- titre.getWidth(), Gdx.app.getGraphics().getHeight()-150);
+						temps.setVisible(false);
+						Gdx.input.setInputProcessor(stage);
+						boutonRejouer.setVisible(true);
+						if (boutonRejouer.isPressed())
+				        	game.setScreen(new GameScreen(game));
+						if (boutonRetour.isPressed())
+					       	game.setScreen(new MenuScreen(game));
+						fond.setVisible(false);
+						fond2.setVisible(true);
+						boutonRetour.setPosition(Gdx.app.getGraphics().getWidth()/2 - boutonRejouer.getWidth()/2 , Gdx.app.getGraphics().getHeight()-300);
+						
+					}
+				renderer.render();
+			}
 	    private static String getStringFromInputStream(InputStream is) {
 
     BufferedReader br = null;
@@ -275,7 +294,6 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    			System.out.println("Clické  X:"+ unBlock.getPosition().x +"  Y:"+unBlock.getPosition().y );
 	    			
 	    			blockDejaJoue = null;
-	    			Score(10);
 	    			
 	    		}else{
 	    			blockDejaJoue = unBlock;
@@ -311,7 +329,7 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    }
 	 
 	    public void Score(int point){
-	    	nbpoint=nbpoint + point;
+	    	score=score + point;
 	    	
 	    }
 	    @Override
@@ -346,6 +364,46 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    
 	    
 	    
-	    
-	    
-	}
+	    public int getScore(){
+	    	return score;
+	    }
+	
+
+		
+		public Timer createTimer ()
+		{
+		  // Création d'une instance de listener 
+		  // associée au timer
+		  ActionListener action = new ActionListener ()
+		    {
+		      // Méthode appelée à chaque tic du timer
+		  public void actionPerformed (ActionEvent event)
+		  {
+		  	
+				if(min !=0){
+		    	 if (sec == 0) {
+		             min--;
+		             sec = 59;
+		          } else{
+		        	  sec--;         
+		          }
+				}else{
+					 sec--;   
+					if(sec == 0)
+					 flagFindePartie=true;
+				}
+					
+		    	temps.setText(String.valueOf(min + ":" + sec));	        	 
+		      }
+		    };
+		    
+		  // Création d'un timer qui génère un tic
+		  // chaque 500 millième de seconde
+		  return new Timer (1000, action);
+		}  
+
+	 
+		public boolean getFlagFinDePartie(){
+			return this.flagFindePartie;
+		}
+}

@@ -20,6 +20,9 @@ public class Plateau {
 	
 	private boolean flagInit = false;
 	
+	private int coefficientCombo=0;
+
+	
 	public Plateau(Joueur joueur1, Joueur joueur2, int tailleX, int tailleY, GameScreen gameScreen){ //Constructeur du plateau
 		
 		this.gameScreen = gameScreen;
@@ -41,15 +44,14 @@ public class Plateau {
 		}
 		
 		
-		//trouverCombo();
+		trouverCombo();
 		/*for(int i=6; i<10; i++){ //Trucage du tableau pour les tests
 			tabCristaux[9][i] = new Cristal(0);
 			tabCristaux[i][9] = new Cristal(1);
 		}
 		tabCristaux[9][9] = new Cristal(0);
 		tabCristaux[9][8] = new Cristal(1);*/
-		flagInit = true;
-		
+		flagInit = true;		
 	}
 	
 	public String toString(){   //toString pour faciliter l'affichage et le debogage	
@@ -68,6 +70,10 @@ public class Plateau {
 	}
 	
 	public void jouer(Joueur joueur, int posX1, int posY1, int posX2, int posY2){ // Lorsque le joueur doit jouer
+		
+		coefficientCombo = 1;
+		
+		
 		
 		if(joueur == joueurCourant){					//On vérifie si c'est son tour de jouer
 			if( verifVoisin(posX1, posY1, posX2, posY2)){				//On vérifie si les cristaux joués sont voisins
@@ -225,7 +231,7 @@ public class Plateau {
 		}*/
 	
 		if(maListe.size() > 2){			//Si la liste du cristal a assez d'élément on renvoi la liste
-			System.out.println(maListe);
+			gameScreen.Score(10*maListe.size()*coefficientCombo);
 			return maListe;
 		}
 		
@@ -325,4 +331,14 @@ public class Plateau {
 		}
 		return retour;
 	}
+
+	public void setCoeffCombo(){
+		coefficientCombo++;
+	}
+
+	public GameScreen getGameScreen(){
+		return this.gameScreen;
+	}
+
+
 }

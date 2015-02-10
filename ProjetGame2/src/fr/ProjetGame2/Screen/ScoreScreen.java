@@ -1,8 +1,13 @@
 package fr.ProjetGame2.Screen;
 
 
+<<<<<<< HEAD
 import java.io.BufferedReader;
 import java.io.FileReader;
+=======
+import java.io.File;
+import java.io.FileWriter;
+>>>>>>> origin/master
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -17,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+
 import fr.ProjetGame2.Game.ProjetGame2;
 import fr.ProjetGame2.Elements.Score;
 
@@ -47,7 +53,7 @@ public class ScoreScreen implements Screen, InputProcessor{
 
 
 	public ScoreScreen(ProjetGame2 game) {
-        this.game = game;
+        this.game = game;	    
     }
     
     
@@ -156,6 +162,18 @@ public class ScoreScreen implements Screen, InputProcessor{
 			System.out.println("Erreur --" + ioe.toString());
 			}
 		
+		
+		
+	    int meilleurScore = game.getGameScreen().getScore();
+        
+	      //FileHandle fichier = Gdx.files.classpath("./scores.txt");
+		   
+	        try{
+	        	FileWriter monFichier = new FileWriter("./scores.txt");
+	        	monFichier.write(meilleurScore);
+	        }catch(IOException ex){
+	        	System.out.println(ex);
+	        }
 		
 		
 	}

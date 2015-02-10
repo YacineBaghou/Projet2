@@ -57,6 +57,8 @@ public class WorldRenderer {
     
     private Plateau monPlateau;
     
+    private boolean flagInit = false;
+    
  
     public void setSize (int w, int h) {
         this.width = w;
@@ -99,48 +101,34 @@ public class WorldRenderer {
         spriteBatch.begin();
             drawBlocks();
         spriteBatch.end();
-        if (debug)
-            drawDebug();
+      
     }
  
     private void drawBlocks() {
-    	boolean testDessinFinis = true;
-    	
-    	for(Block block : world.getBlocks()){
-    		//System.out.println("X:" + block.getPosition().x + "  Y:" + block.getPosition().y);
-    		int couleurTemp = monPlateau.pickCristal( 9 - Math.round(block.getPosition().y),Math.round(block.getPosition().x)).getCouleur();
-    		alea = gemmes.get(couleurTemp);
-    		   spriteBatch.draw(
-    	                alea, 
-    	                block.getPosition().x * ppuX + 200, 
-    	                block.getPosition().y * ppuY + 40+block.getDecalage(), 
-    	                Block.getSize() * ppuX, 
-    	                Block.getSize() * ppuY);
-    		   block.setDecalage();
-    		   if(block.getDecalage()>0)
-    			   testDessinFinis = false;
-    	}
-    	
-    	if (testDessinFinis)
-    		monPlateau.trouverCombo();
+    	if(!monPlateau.getGameScreen().getFlagFinDePartie()){
+	    	boolean testDessinFinis = true;
+	    	
+	    	for(Block block : world.getBlocks()){
+	    		//System.out.println("X:" + block.getPosition().x + "  Y:" + block.getPosition().y);
+	    		int couleurTemp = monPlateau.pickCristal( 9 - Math.round(block.getPosition().y),Math.round(block.getPosition().x)).getCouleur();
+	    		alea = gemmes.get(couleurTemp);
+	    		   spriteBatch.draw(
+	    	                alea, 
+	    	                block.getPosition().x * ppuX + 200, 
+	    	                block.getPosition().y * ppuY + 40+block.getDecalage(), 
+	    	                Block.getSize() * ppuX, 
+	    	                Block.getSize() * ppuY);
+	    		   block.setDecalage();
+	    		   if(block.getDecalage()>0)
+	    			   testDessinFinis = false;
+	    	}
+	    	
+	    	if (testDessinFinis){
+	    		monPlateau.setCoeffCombo();
+	    		monPlateau.trouverCombo();
+	    	}
+	    }
     }
- 
-  
-
- 
-    private void drawDebug() {
-        // Démarrage du renderer
-        debugRenderer.setProjectionMatrix(cam.combined);
-        debugRenderer.begin(ShapeType.Filled);
- 
-        // render blocks
-        for (Block block : world.getBlocks()) {
-            Rectangle rect = block.getBounds();
-            float x1 = block.getPosition().x + rect.x;
-            float y1 = block.getPosition().y + rect.y;
-            debugRenderer.setColor(new Color(1, 0, 0, 1));
-            debugRenderer.rect(x1, y1, rect.width, rect.height);
-        }
-     
-    }
+    
+    
 }
