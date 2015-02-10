@@ -1,6 +1,13 @@
 package fr.ProjetGame2.Screen;
 
 
+
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -9,7 +16,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
-import javax.swing.JFrame;
+//import javax.swing.JFrame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
@@ -24,8 +31,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.Timer.Task;
 
 import fr.ProjetGame2.Elements.Block;
 import fr.ProjetGame2.Elements.Joueur;
@@ -33,6 +38,10 @@ import fr.ProjetGame2.Elements.Plateau;
 import fr.ProjetGame2.Elements.World;
 import fr.ProjetGame2.Game.ProjetGame2;
 import fr.ProjetGame2.View.WorldRenderer;
+
+
+
+
 	 
 	public class GameScreen implements Screen, InputProcessor {
 		 
@@ -49,8 +58,10 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    private Image fond;
 	    private Image fond2;
 	    private int score =0;
-	    private int sec = 0;
-    	private int min = 40;
+	    private int sec = 10;
+    	private int min = 0;
+    	private Timer timer;
+    	
     	private TextButton boutonRejouer;
     	static BufferedWriter out = null;
     	private String chaineMeilleurScore;
@@ -64,11 +75,12 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    private Block blockDejaJoue = null;
 	    
 	    
+	    private boolean flagFindePartie = false;
 	    
 	 
 	    public GameScreen(ProjetGame2 game) {
 	        this.game = game;
-	        
+			flagFindePartie = false;
 	    }
 	    
 	    
@@ -106,7 +118,7 @@ import fr.ProjetGame2.View.WorldRenderer;
 			stage.addActor(point);
 			
 			//Affichage du temps
-			temps = new Label("Score:",skin);
+			temps = new Label("Temps:",skin);
 			temps.setPosition(50, Gdx.app.getGraphics().getHeight()-200);
 			stage.addActor(temps);
 			
@@ -127,6 +139,8 @@ import fr.ProjetGame2.View.WorldRenderer;
 			
 			
 			//ajout Chrono
+			timer = createTimer();
+			timer.start();
 
 	    }
 	 
@@ -138,9 +152,9 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    	Gdx.input.setInputProcessor(this);
 
 	    	
-			if(true){
-					point.setText(String.valueOf("score: " +score));
-			}else{
+			if(!flagFindePartie){
+					point.setText(String.valueOf("Score: " +score));
+					temps.setText(String.valueOf(min + ":" + sec));			}else{
 			//affichage de fin d'écran et enregistrement du score
 			titre.setText("Fin de partie");
 			point.setText("vous avez effectuer un score de "+ score);
@@ -338,5 +352,43 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    public int getScore(){
 	    	return score;
 	    }
-	    
-	}
+	
+
+		
+		public Timer createTimer ()
+		{
+		  // Création d'une instance de listener 
+		  // associée au timer
+		  ActionListener action = new ActionListener ()
+		    {
+		      // Méthode appelée à chaque tic du timer
+		  public void actionPerformed (ActionEvent event)
+		  {
+		  	
+				if(min !=0){
+		    	 if (sec == 0) {
+		             min--;
+		             sec = 59;
+		          } else{
+		        	  sec--;         
+		          }
+				}else{
+					 sec--;   
+					if(sec == 0)
+					 flagFindePartie=true;
+				}
+					
+		    	temps.setText(String.valueOf(min + ":" + sec));	        	 
+		      }
+		    };
+		    
+		  // Création d'un timer qui génère un tic
+		  // chaque 500 millième de seconde
+		  return new Timer (1000, action);
+		}  
+
+	 
+		public boolean getFlagFinDePartie(){
+			return this.flagFindePartie;
+		}
+}

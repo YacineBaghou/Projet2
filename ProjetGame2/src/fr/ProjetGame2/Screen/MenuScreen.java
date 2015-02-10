@@ -1,6 +1,5 @@
 package fr.ProjetGame2.Screen;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -30,6 +29,12 @@ public class MenuScreen implements Screen, InputProcessor {
 	
     public MenuScreen(ProjetGame2 game) {
         this.game = game;
+        
+        
+        
+        
+        
+        
     }
 
 	
@@ -179,6 +184,10 @@ public class MenuScreen implements Screen, InputProcessor {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	
+	
+	
 
 }
 
