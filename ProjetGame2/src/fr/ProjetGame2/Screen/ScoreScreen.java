@@ -4,10 +4,8 @@ package fr.ProjetGame2.Screen;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-
 import java.io.File;
 import java.io.FileWriter;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -36,10 +34,10 @@ public class ScoreScreen implements Screen, InputProcessor{
 	private TextButton boutonRetour;
     private Texture fondEcran;
     private Image fond;
-    private ArrayList<Score>listeScores = new ArrayList<Score>();
+   // private ArrayList<Score>listeScores = new ArrayList<Score>();
     FileHandle fichier = Gdx.files.absolute("C:/Program Files (x86)/eclipse/workspace/Projet2/ProjetGame2-desktop/bin/assets/scores.txt");
     
-    
+    /*
     public ArrayList<Score> getListeScores() {
 		return listeScores;
 	}
@@ -48,7 +46,7 @@ public class ScoreScreen implements Screen, InputProcessor{
 
 	public void setListeScores(ArrayList<Score> listeScores) {
 		this.listeScores = listeScores;
-	}
+	}*/
 
 
 
@@ -112,7 +110,6 @@ public class ScoreScreen implements Screen, InputProcessor{
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
     	skin = new Skin(Gdx.files.internal("assets/uiskin.json"));
-//	    fichier.writeString("aaaaaaa", false);
 		
     	//fond d'écran
     	fondEcran = new Texture(Gdx.files.internal("assets/fond2.jpg"));
@@ -120,74 +117,51 @@ public class ScoreScreen implements Screen, InputProcessor{
 		stage.addActor(fond);
     	
     	//label titre
-    	titre = new Label("Menu Jeux",skin);
+    	titre = new Label("Meilleurs scores",skin);
 		titre.setPosition(Gdx.app.getGraphics().getWidth()/2-titre.getWidth()/2, Gdx.app.getGraphics().getHeight()-50);
 		stage.addActor(titre);
 		
 		//différents scores
 		score = new Label("",skin);
-		score.setPosition(Gdx.app.getGraphics().getWidth()/4-score.getWidth()/2, Gdx.app.getGraphics().getHeight()-100);
+		score.setPosition(Gdx.app.getGraphics().getWidth()/3-score.getWidth()/2, Gdx.app.getGraphics().getHeight()-120);
 		stage.addActor(score);
-//		point = new Label("Score 2 : 984595",skin);
-//		point.setPosition(Gdx.app.getGraphics().getWidth()/2-point.getWidth()/2, Gdx.app.getGraphics().getHeight()-150);
-//		stage.addActor(point);
+		
 		
 		//bouton retour au menu
 		boutonRetour = new TextButton("Menu",skin);
-		boutonRetour.setPosition(100, 20);
+		boutonRetour.setPosition(Gdx.app.getGraphics().getWidth()/2, 50);
 		boutonRetour.setColor(Color.CYAN);
 		stage.addActor(boutonRetour);
-		String filePath = "C:/Program Files (x86)/eclipse/workspace/Projet2/ProjetGame2-desktop/bin/assets/scores.txt";
-		try{
-			// Création du flux bufférisé sur un FileReader, immédiatement suivi par un 
-			// try/finally, ce qui permet de ne fermer le flux QUE s'il le reader
-			// est correctement instancié (évite les NullPointerException)
-			BufferedReader buff = new BufferedReader(new FileReader(filePath));
-			 
-			try {
-			String line;
-			// Lecture du fichier ligne par ligne. Cette boucle se termine
-			// quand la méthode retourne la valeur null.
-			while ((line = buff.readLine()) != null) {
-			score.setText(score.getText() + line+"\n");
-			System.out.println(line);
-			//faites ici votre traitement
-			}
-			} finally {
-			// dans tous les cas, on ferme nos flux
-			buff.close();
-			}
-			} catch (IOException ioe) {
-			// erreur de fermeture des flux
-			System.out.println("Erreur --" + ioe.toString());
-			}
 		
-		
-		
-	    int meilleurScore = game.getGameScreen().getScore();
-        
-	      //FileHandle fichier = Gdx.files.classpath("./scores.txt");
-		   
-	        try{
-	        	FileWriter monFichier = new FileWriter("./scores.txt");
-	        	monFichier.write(meilleurScore);
-	        }catch(IOException ex){
-	        	System.out.println(ex);
-	        }
-		
-		
+		String chaine = new String();
+			
+		BufferedReader br;
+	    try{
+	    	br = new BufferedReader(new FileReader(new File("fichierDeSauvegardeDiamond.txt")));
+		    
+	    	String line = br.readLine();
+	    	
+	    	while(line!=null){
+	    		chaine += line.split(":")[0]+"  "+line.split(":")[1]+"\n";
+	    		line = br.readLine();
+	    	}
+	    	
+	    	br.close();
+	    	
+	    }catch(IOException e){
+	    	System.out.print(e);
+	    }
+	    
+	    score.setText(chaine);
+	    
+	    
 	}
 
 	@Override
 	public void render(float delta) {
 		stage.act();
         stage.draw();
-//        if(fichier.exists()==true){
-//        	score.setText("Meilleur score: " + fichier.readString());
-//        	
-//        }else{
-//        	score.setText("Il n'y a aucun score enregistre");
-//        }
+
         //action du bouton retour menu
         if (boutonRetour.isPressed())
 	       	game.setScreen(new MenuScreen(game));

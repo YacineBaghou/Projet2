@@ -22,10 +22,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.text.Format;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 //import javax.swing.JFrame;
+
 
 
 
@@ -86,8 +88,8 @@ import fr.ProjetGame2.View.WorldRenderer;
 	    private Image fond;
 	    private Image fond2;
 	    private int score = 0;
-	    private int sec = 30;
-    	private int min = 0;
+	    private int sec = 0;
+    	private int min = 3;
     	private Timer timer;
     	
     	private TextButton boutonRejouer;
@@ -169,7 +171,7 @@ import fr.ProjetGame2.View.WorldRenderer;
 			//permet de réinitialiser l'écran tout les 5 sec
 
 			 monChamp = new TextField("", skin);
-			monChamp.setPosition(50, Gdx.app.getGraphics().getHeight()-200);
+			monChamp.setPosition(250, Gdx.app.getGraphics().getHeight()-200);
 			
 			
 			//ajout Chrono
@@ -191,7 +193,7 @@ import fr.ProjetGame2.View.WorldRenderer;
 					temps.setText(String.valueOf(min + ":" + sec));			}else{
 			//affichage de fin d'écran et enregistrement du score
 			titre.setText("Fin de partie");
-			point.setText("vous avez effectuer un score de "+ score);
+			point.setText("Vous avez effectuer un score de "+ score);
 						titre.setPosition(Gdx.app.getGraphics().getWidth()/2- titre.getWidth()/2, Gdx.app.getGraphics().getHeight()-50);
 						point.setPosition(Gdx.app.getGraphics().getWidth()/2- titre.getWidth(), Gdx.app.getGraphics().getHeight()-150);
 						temps.setVisible(false);
@@ -444,7 +446,7 @@ import fr.ProjetGame2.View.WorldRenderer;
 				}
 			}
 			
-			if(listeDesScores.size()==0){
+			if(!dejaInsere){
 				String nom;
 				if(monChamp.getText()!=""){
 					nom = monChamp.getText();
